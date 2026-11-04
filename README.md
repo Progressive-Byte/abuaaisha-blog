@@ -11,7 +11,11 @@ npm run build      # thumbs → astro check → astro build → Pagefind search 
 npm run preview    # serve dist/
 ```
 
-Node 22.12+ (pinned in `netlify.toml` and `package.json`).
+`netlify.toml` and `.nvmrc` select Node 24 for production builds. Astro is held at
+`~7.3.8` because Netlify preview builds currently use Node 22.12, which does not
+support the Astro 7.4 line. The `engines` field allows Node 22.12+ for preview
+builds. Upgrade Astro after the preview build environment moves to a newer Node
+version.
 
 ## Where things live
 
