@@ -9,7 +9,7 @@ function required(name: string): string {
 
 export const env = {
   get githubRepo() {
-    return process.env.GITHUB_REPO ?? "rwxlog/abuaaisha-test";
+    return process.env.GITHUB_REPO ?? "MujahidEmon/blog-pgb";
   },
   get githubBranch() {
     return process.env.GITHUB_BRANCH ?? "main";

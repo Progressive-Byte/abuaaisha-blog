@@ -3,7 +3,7 @@
 
 backend:
   name: github
-  repo: rwxlog/abuaaisha-test
+  repo: MujahidEmon/blog-pgb
   branch: main
   # Login uses Netlify's GitHub OAuth provider (no base_url = Netlify default).
 
