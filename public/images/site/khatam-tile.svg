@@ -1,0 +1,9 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100" width="100" height="100">
+  <!-- One cell of the Figma "Arabesque Flow" lattice: khatam star (union of two squares),
+       inner octagon (their intersection) and the touching ring. -->
+  <g fill="none" stroke="#c9a55c" stroke-width="0.5">
+    <polygon points="89.6,50 78,61.6 78,78 61.6,78 50,89.6 38.4,78 22,78 22,61.6 10.4,50 22,38.4 22,22 38.4,22 50,10.4 61.6,22 78,22 78,38.4"/>
+    <polygon stroke-opacity="0.7" points="67.36,57.19 57.19,67.36 42.81,67.36 32.64,57.19 32.64,42.81 42.81,32.64 57.19,32.64 67.36,42.81"/>
+    <circle stroke-opacity="0.45" cx="50" cy="50" r="50"/>
+  </g>
+</svg>

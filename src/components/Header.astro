@@ -1,0 +1,291 @@
+---
+import Icon from "./Icon.astro";
+import Logo from "./Logo.astro";
+import { NAV } from "../lib/site";
+
+const path = Astro.url.pathname;
+const isActive = (href: string) =>
+  href === "/" ? path === "/" : path.startsWith(href) || (href === "/posts/" && path.startsWith("/categories/"));
+---
+
+<header class="site-header">
+  <div class="container bar">
+    <Logo />
+
+    <button
+      class="menu-toggle"
+      type="button"
+      aria-expanded="false"
+      aria-controls="site-menu"
+      data-menu-toggle
+    >
+      <span class="visually-hidden">মেনু</span>
+      <span class="burger" aria-hidden="true"></span>
+    </button>
+
+    <div class="menu" id="site-menu" data-menu>
+      <nav aria-label="প্রধান মেনু">
+        <ul>
+          {
+            NAV.map((item) => (
+              <li>
+                <a href={item.href} aria-current={isActive(item.href) ? "page" : undefined}>
+                  {item.label}
+                </a>
+              </li>
+            ))
+          }
+        </ul>
+      </nav>
+      <span class="divider" aria-hidden="true"></span>
+      <div class="actions">
+        <a class="btn btn--outline contact-btn" href="/contact/" data-contact-open>
+          <Icon name="mail" size={20} />
+          যোগাযোগ করুন
+        </a>
+        <a class="btn btn--primary" href="/counseling/#sessions">
+          সেশন বুক করুন
+          <Icon name="arrow-right" />
+        </a>
+      </div>
+    </div>
+  </div>
+</header>
+
+<script>
+  const toggle = document.querySelector<HTMLButtonElement>("[data-menu-toggle]");
+  const menu = document.querySelector<HTMLElement>("[data-menu]");
+  if (toggle && menu) {
+    const setOpen = (open: boolean) => {
+      toggle.setAttribute("aria-expanded", String(open));
+      menu.classList.toggle("is-open", open);
+      document.body.classList.toggle("menu-open", open);
+    };
+    toggle.addEventListener("click", () => setOpen(toggle.getAttribute("aria-expanded") !== "true"));
+    document.addEventListener("keydown", (e) => {
+      if (e.key === "Escape" && menu.classList.contains("is-open")) {
+        setOpen(false);
+        toggle.focus();
+      }
+    });
+    menu.addEventListener("click", (e) => {
+      if ((e.target as HTMLElement).closest("a")) setOpen(false);
+    });
+  }
+</script>
+
+<style>
+  .site-header {
+    position: sticky;
+    top: 0;
+    z-index: 50;
+    border-bottom: 1px solid var(--color-line);
+    background: color-mix(in srgb, var(--color-paper) 94%, transparent);
+    backdrop-filter: saturate(1.4) blur(10px);
+  }
+
+  .bar {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: var(--space-5);
+    min-height: 5.375rem;
+    padding-block: var(--space-3);
+  }
+
+  .menu {
+    display: flex;
+    align-items: center;
+    gap: 1.75rem;
+  }
+
+  nav ul {
+    display: flex;
+    gap: 2rem;
+    margin: 0;
+    padding: 0;
+    list-style: none;
+  }
+
+  nav a {
+    position: relative;
+    display: block;
+    padding: 0.5rem 0.25rem;
+    color: var(--color-ink-700);
+    font-size: var(--text-ui);
+    font-weight: 500;
+    line-height: 1.5;
+    text-decoration: none;
+    white-space: nowrap;
+  }
+
+  nav a:hover,
+  nav a[aria-current="page"] {
+    color: var(--color-ink-900);
+  }
+
+  nav a[aria-current="page"]::after {
+    content: "";
+    position: absolute;
+    bottom: -0.125rem;
+    left: 50%;
+    width: 1.125rem;
+    height: 2px;
+    border-radius: 2px;
+    background: var(--color-accent-700);
+    transform: translateX(-50%);
+  }
+
+  .divider {
+    width: 1px;
+    height: 1.375rem;
+    background: var(--color-line-strong);
+  }
+
+  .actions {
+    display: flex;
+    gap: var(--space-3);
+  }
+
+  .contact-btn {
+    padding-left: 1.25rem;
+  }
+
+  .contact-btn :global(svg) {
+    width: 1.25rem;
+    height: 1.25rem;
+  }
+
+  .menu-toggle {
+    display: none;
+  }
+
+  @media (max-width: 75rem) {
+    nav ul {
+      gap: 1.25rem;
+    }
+
+    .menu {
+      gap: 1.25rem;
+    }
+
+    .contact-btn {
+      display: none;
+    }
+  }
+
+  @media (max-width: 64rem) {
+    .bar {
+      min-height: 4.5rem;
+    }
+
+    .menu-toggle {
+      display: grid;
+      place-items: center;
+      width: 2.75rem;
+      height: 2.75rem;
+      border: 1.5px solid var(--color-line-strong);
+      border-radius: var(--radius);
+      background: var(--color-surface);
+      cursor: pointer;
+    }
+
+    .burger,
+    .burger::before,
+    .burger::after {
+      display: block;
+      width: 1.125rem;
+      height: 2px;
+      border-radius: 2px;
+      background: var(--color-ink-900);
+      transition: transform 0.2s;
+    }
+
+    .burger {
+      position: relative;
+    }
+
+    .burger::before,
+    .burger::after {
+      content: "";
+      position: absolute;
+      left: 0;
+    }
+
+    .burger::before {
+      top: -6px;
+    }
+
+    .burger::after {
+      top: 6px;
+    }
+
+    [aria-expanded="true"] .burger {
+      background: transparent;
+    }
+
+    [aria-expanded="true"] .burger::before {
+      transform: translateY(6px) rotate(45deg);
+    }
+
+    [aria-expanded="true"] .burger::after {
+      transform: translateY(-6px) rotate(-45deg);
+    }
+
+    .menu {
+      position: absolute;
+      top: 100%;
+      right: 0;
+      left: 0;
+      display: none;
+      flex-direction: column;
+      align-items: stretch;
+      gap: var(--space-4);
+      padding: var(--space-4) var(--gutter) var(--space-6);
+      border-bottom: 1px solid var(--color-line);
+      background: var(--color-paper);
+      box-shadow: var(--shadow-card);
+    }
+
+    .menu.is-open {
+      display: flex;
+    }
+
+    nav ul {
+      flex-direction: column;
+      gap: 0;
+    }
+
+    nav a {
+      padding: 0.75rem 0;
+      border-bottom: 1px solid var(--color-line);
+    }
+
+    nav a[aria-current="page"]::after {
+      display: none;
+    }
+
+    nav a[aria-current="page"] {
+      color: var(--color-accent-700);
+      font-weight: 600;
+    }
+
+    .divider {
+      display: none;
+    }
+
+    .actions {
+      flex-direction: column;
+    }
+
+    .contact-btn {
+      display: inline-flex;
+    }
+  }
+
+  @media (max-width: 26rem) {
+    .bar :global(.tagline) {
+      display: none;
+    }
+  }
+</style>

@@ -1,0 +1,183 @@
+---
+// Contact popup (Figma frame 06). Any element with [data-contact-open] opens it;
+// [data-subject] pre-selects the subject. Without JavaScript the links go to /contact/.
+import ContactForm from "./ContactForm.astro";
+import Icon from "./Icon.astro";
+import { SITE } from "../lib/site";
+---
+
+<dialog class="contact-modal" aria-labelledby="contact-modal-title" data-contact-modal>
+  <div class="top">
+    <span class="badge"><Icon name="mail" size={26} /></span>
+    <div>
+      <h2 id="contact-modal-title">যোগাযোগ করুন</h2>
+      <p>আপনার প্রশ্ন বা প্রয়োজনের কথা লিখুন—সাধারণত ২৪ ঘণ্টার মধ্যে উত্তর দেওয়া হয়।</p>
+    </div>
+    <button class="close" type="button" data-contact-close>
+      <Icon name="close" size={22} label="বন্ধ করুন" />
+    </button>
+  </div>
+
+  <ContactForm idPrefix="modal" />
+
+  <div class="or" role="separator"><span>অথবা</span></div>
+
+  <a class="direct" href={`mailto:${SITE.email}`}>
+    <span class="direct-badge"><Icon name="mail" size={20} /></span>
+    <span class="direct-text">
+      <span>সরাসরি ইমেইল করুন</span>
+      <strong>{SITE.email}</strong>
+    </span>
+    <Icon name="arrow-up-right" size={22} />
+  </a>
+</dialog>
+
+<script>
+  const modal = document.querySelector<HTMLDialogElement>("[data-contact-modal]");
+  if (modal && typeof modal.showModal === "function") {
+    const subject = modal.querySelector<HTMLSelectElement>("[data-contact-subject]");
+    document.addEventListener("click", (e) => {
+      const opener = (e.target as HTMLElement).closest<HTMLElement>("[data-contact-open]");
+      if (!opener) return;
+      e.preventDefault();
+      const wanted = opener.dataset.subject;
+      if (subject && wanted) subject.value = wanted;
+      modal.showModal();
+    });
+    modal.querySelector("[data-contact-close]")?.addEventListener("click", () => modal.close());
+    // Click on the backdrop closes the dialog.
+    modal.addEventListener("click", (e) => {
+      if (e.target === modal) modal.close();
+    });
+  }
+</script>
+
+<style>
+  .contact-modal {
+    width: min(42.5rem, calc(100vw - 2rem));
+    max-height: calc(100dvh - 2rem);
+    padding: 2.75rem 3rem;
+    border: 0;
+    border-radius: 1.75rem;
+    background: var(--color-surface);
+    box-shadow: var(--shadow-modal);
+    color: var(--color-ink-700);
+  }
+
+  .contact-modal[open] {
+    display: grid;
+    gap: 1.75rem;
+  }
+
+  .contact-modal::backdrop {
+    background: var(--color-scrim);
+  }
+
+  @media (max-width: 40rem) {
+    .contact-modal {
+      padding: var(--space-6) var(--space-5);
+    }
+  }
+
+  .top {
+    display: flex;
+    align-items: flex-start;
+    gap: 1.125rem;
+  }
+
+  .badge {
+    display: grid;
+    flex: none;
+    place-items: center;
+    width: 3.5rem;
+    height: 3.5rem;
+    border-radius: var(--radius-md);
+    background: var(--color-accent-50);
+    color: var(--color-accent-700);
+  }
+
+  .top > div {
+    flex: 1;
+  }
+
+  h2 {
+    font-size: var(--text-h3);
+    line-height: 1.4;
+  }
+
+  .top p {
+    margin-top: var(--space-1);
+    color: var(--color-ink-500);
+    font-size: var(--text-body);
+    line-height: 1.72;
+  }
+
+  .close {
+    display: grid;
+    flex: none;
+    place-items: center;
+    width: 3rem;
+    height: 3rem;
+    border: 1.5px solid var(--color-line-strong);
+    border-radius: 999px;
+    background: transparent;
+    color: var(--color-ink-900);
+    cursor: pointer;
+  }
+
+  .or {
+    display: flex;
+    align-items: center;
+    gap: var(--space-4);
+    color: var(--color-ink-500);
+    font-size: var(--text-meta);
+  }
+
+  .or::before,
+  .or::after {
+    content: "";
+    flex: 1;
+    height: 1px;
+    background: var(--color-line);
+  }
+
+  .direct {
+    display: flex;
+    align-items: center;
+    gap: var(--space-4);
+    padding: 1.125rem 1.25rem 1.125rem 1.125rem;
+    border-radius: var(--radius-md);
+    background: var(--color-paper-deep);
+    color: var(--color-accent-700);
+    text-decoration: none;
+  }
+
+  .direct-badge {
+    display: grid;
+    flex: none;
+    place-items: center;
+    width: 3rem;
+    height: 3rem;
+    border-radius: 999px;
+    background: var(--color-surface);
+    color: var(--color-ink-900);
+  }
+
+  .direct-text {
+    display: grid;
+    flex: 1;
+    gap: 0.125rem;
+    line-height: 1.5;
+  }
+
+  .direct-text span {
+    color: var(--color-ink-500);
+    font-size: var(--text-meta);
+  }
+
+  .direct-text strong {
+    font-size: var(--text-h5);
+    font-weight: 600;
+    overflow-wrap: anywhere;
+  }
+</style>

@@ -1,0 +1,33 @@
+---
+// No-JavaScript fallback for the contact popup; same Netlify form.
+import ContactForm from "../../components/ContactForm.astro";
+import PageIntro from "../../components/PageIntro.astro";
+import BaseLayout from "../../layouts/BaseLayout.astro";
+import { SITE } from "../../lib/site";
+---
+
+<BaseLayout title="যোগাযোগ" description="প্রশ্ন, মতামত বা কাউন্সেলিং সেশন বুক করতে বার্তা পাঠান।">
+  <div class="container narrow">
+    <PageIntro title="যোগাযোগ করুন" lede="আপনার প্রশ্ন বা প্রয়োজনের কথা লিখুন—সাধারণত ২৪ ঘণ্টার মধ্যে উত্তর দেওয়া হয়।" />
+    <ContactForm idPrefix="page" />
+    <p class="direct">অথবা সরাসরি ইমেইল করুন: <a href={`mailto:${SITE.email}`}>{SITE.email}</a></p>
+  </div>
+</BaseLayout>
+
+<style>
+  .narrow {
+    max-width: calc(42.5rem + 2 * var(--gutter));
+    padding-bottom: var(--space-9);
+  }
+
+  .direct {
+    margin-top: var(--space-6);
+    color: var(--color-ink-500);
+    text-align: center;
+  }
+
+  .direct a {
+    color: var(--color-accent-700);
+    font-weight: 600;
+  }
+</style>

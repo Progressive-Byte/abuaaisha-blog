@@ -1,0 +1,72 @@
+---
+import Icon from "./Icon.astro";
+import { SITE } from "../lib/site";
+
+interface Props {
+  tone?: "light" | "dark";
+}
+
+const { tone = "light" } = Astro.props;
+---
+
+<a class:list={["logo", `logo--${tone}`]} href="/" aria-label={`${SITE.name} — হোম`}>
+  <span class="mark"><Icon name="star" size={20} /></span>
+  <span class="wordmark">
+    <span class="name">{SITE.name}</span>
+    <span class="tagline">{SITE.tagline}</span>
+  </span>
+</a>
+
+<style>
+  .logo {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.875rem;
+    text-decoration: none;
+  }
+
+  .mark {
+    display: grid;
+    flex: none;
+    place-items: center;
+    width: 3rem;
+    height: 3rem;
+    border-radius: 0.875rem;
+    background: var(--color-btn);
+    color: var(--color-on-dark);
+  }
+
+  .wordmark {
+    display: grid;
+    gap: 0.125rem;
+    white-space: nowrap;
+  }
+
+  .name {
+    color: var(--color-ink-900);
+    font-size: 1.4375rem;
+    font-weight: 700;
+    line-height: 1.25;
+    letter-spacing: -0.005em;
+  }
+
+  .tagline {
+    color: var(--color-ink-500);
+    font-size: var(--text-overline);
+    font-weight: 500;
+    line-height: 1.4;
+  }
+
+  .logo--dark .mark {
+    background: var(--color-on-dark);
+    color: var(--color-on-light-btn);
+  }
+
+  .logo--dark .name {
+    color: var(--color-on-dark);
+  }
+
+  .logo--dark .tagline {
+    color: var(--color-on-dark-muted);
+  }
+</style>

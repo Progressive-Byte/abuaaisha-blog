@@ -1,0 +1,113 @@
+# Sveltia CMS — https://sveltiacms.app/en/docs
+# Fields mirror src/lib/post-schema.ts exactly; the build fails on anything else.
+
+backend:
+  name: github
+  repo: rwxlog/abuaaisha-test
+  branch: main
+  # Login uses Netlify's GitHub OAuth provider (no base_url = Netlify default).
+
+# Saves become cms/* branches + pull requests; "Publish" merges into main.
+publish_mode: editorial_workflow
+
+site_url: https://abuaaisha.com
+display_url: https://abuaaisha.com
+logo_url: /favicon.svg
+
+media_folder: public/images/posts
+public_folder: /images/posts
+
+media_libraries:
+  default:
+    config:
+      max_file_size: 8000000
+      # Uploads are converted in the browser: WebP, at most 1600px wide (same as the AI pipeline).
+      transformations:
+        raster_image:
+          format: webp
+          quality: 80
+          width: 1600
+          height: 1600
+
+collections:
+  - name: posts
+    label: লেখা
+    label_singular: লেখা
+    folder: src/content/posts
+    extension: md
+    format: frontmatter
+    create: true
+    delete: false # never delete a published post — unpublish (draft) or redirect instead
+    slug:
+      editable: [create]
+      hint: "ফাইলের নাম = URL। নিয়ম: ৩ অঙ্কের ক্রম + বিভাগ অক্ষর (f/s/w) + বিভাগের ক্রম, যেমন 033s22"
+      pattern: ['^\d{3}[fsw]\d{2}$', "যেমন 033s22 — ৩টি অঙ্ক, f/s/w, তারপর ২টি অঙ্ক"]
+    summary: "{{title}} — {{date}}"
+    sortable_fields: [date, title]
+    view_filters:
+      - label: খসড়া
+        field: draft
+        pattern: true
+      - label: প্রকাশিত
+        field: draft
+        pattern: false
+      - label: AI খসড়া
+        field: aiGenerated
+        pattern: true
+    fields:
+      - { name: title, label: শিরোনাম, widget: string }
+      - name: date
+        label: প্রকাশের তারিখ
+        widget: datetime
+        format: YYYY-MM-DD
+        time_format: false
+      - name: categories
+        label: বিভাগ
+        widget: select
+        multiple: true
+        min: 1
+        options:
+          - { label: ঈমান (faith), value: faith }
+          - { label: সমাজ (social), value: social }
+          - { label: বিশ্বদৃষ্টি (worldview), value: worldview }
+      - { name: summary, label: "সংক্ষিপ্ত সারাংশ (কার্ডে দেখাবে)", widget: text }
+      - { name: description, label: "দীর্ঘ সারাংশ (SEO)", widget: text, required: false }
+      - { name: image, label: কভার ছবি, widget: image, required: false }
+      - name: imageAlt
+        label: "ছবির বর্ণনা (alt) — ছবি থাকলে আবশ্যক"
+        widget: string
+        required: false
+      - name: draft
+        label: "খসড়া (চালু থাকলে সাইটে প্রকাশ হবে না)"
+        widget: boolean
+        default: true
+      - name: aiGenerated
+        label: AI দিয়ে প্রথম খসড়া তৈরি
+        widget: boolean
+        required: false
+      - name: sources
+        label: "তথ্যসূত্র — প্রতিটি লিংক খুলে যাচাই করুন"
+        widget: list
+        required: false
+        fields:
+          - { name: title, label: শিরোনাম, widget: string }
+          - { name: url, label: লিংক, widget: string }
+      - name: lang
+        label: ভাষা
+        widget: select
+        default: bn
+        options:
+          - { label: বাংলা, value: bn }
+          - { label: English, value: en }
+      - { name: body, label: লেখা, widget: markdown }
+
+  - name: pages
+    label: পাতা
+    files:
+      - name: about
+        label: পরিচিতি
+        file: src/content/pages/about.md
+        fields:
+          - { name: title, label: শিরোনাম, widget: string }
+          - { name: description, label: সংক্ষিপ্ত পরিচিতি, widget: text, required: false }
+          - { name: body, label: লেখা, widget: markdown }

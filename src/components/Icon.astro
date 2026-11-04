@@ -1,0 +1,24 @@
+---
+// Inline SVG icons exported from the Figma file (src/icons). Colour follows currentColor.
+interface Props {
+  name: string;
+  size?: number | string;
+  class?: string;
+  label?: string;
+}
+
+const { name, size = "1em", class: className, label } = Astro.props;
+
+const icons = import.meta.glob<string>("../icons/*.svg", { query: "?raw", import: "default", eager: true });
+const raw = icons[`../icons/${name}.svg`];
+if (!raw) throw new Error(`Unknown icon: ${name}`);
+
+const a11y = label ? `role="img" aria-label="${label}"` : `aria-hidden="true" focusable="false"`;
+const dim = typeof size === "number" ? `${size}px` : size;
+const svg = raw.replace(
+  "<svg ",
+  `<svg ${a11y} width="${dim}" height="${dim}"${className ? ` class="${className}"` : ""} `,
+);
+---
+
+<Fragment set:html={svg} />

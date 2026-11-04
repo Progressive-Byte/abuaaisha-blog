@@ -1,0 +1,47 @@
+---
+import Icon from "../components/Icon.astro";
+import BaseLayout from "../layouts/BaseLayout.astro";
+---
+
+<BaseLayout title="পাতাটি পাওয়া যায়নি" noindex>
+  <section class="lattice-band missing">
+    <div class="container">
+      <p class="code">৪০৪</p>
+      <h1>দুঃখিত, পাতাটি পাওয়া যায়নি</h1>
+      <p>লিংকটি হয়তো ভুল, অথবা পাতাটি সরিয়ে নেওয়া হয়েছে।</p>
+      <div class="actions">
+        <a class="btn btn--light" href="/posts/">সব লেখা দেখুন <Icon name="arrow-right" /></a>
+        <a class="btn btn--ghost-light" href="/">হোমে ফিরে যান</a>
+      </div>
+    </div>
+  </section>
+</BaseLayout>
+
+<style>
+  .missing {
+    padding-block: var(--space-9);
+  }
+
+  .code {
+    color: var(--color-gold-500);
+    font-size: var(--text-h2);
+    font-weight: 700;
+  }
+
+  h1 {
+    margin-top: var(--space-2);
+    font-size: var(--text-h1);
+  }
+
+  .missing p:not(.code) {
+    margin-top: var(--space-3);
+    font-size: var(--text-body-lg);
+  }
+
+  .actions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--space-3);
+    margin-top: var(--space-6);
+  }
+</style>

@@ -1,0 +1,67 @@
+---
+// Navy call-to-action band (post page, Figma "CTA").
+import Icon from "./Icon.astro";
+
+interface Props {
+  title: string;
+  text: string;
+}
+
+const { title, text } = Astro.props;
+---
+
+<section class="cta-band container" aria-labelledby="cta-title">
+  <div class="inner">
+    <span class="dot" aria-hidden="true"></span>
+    <div class="copy">
+      <h2 id="cta-title">{title}</h2>
+      <p>{text}</p>
+    </div>
+    <a class="btn btn--light" href="/counseling/#sessions">সেশন বুক করুন <Icon name="arrow-right" /></a>
+  </div>
+</section>
+
+<style>
+  .cta-band {
+    padding-block: var(--space-9);
+  }
+
+  .inner {
+    position: relative;
+    display: flex;
+    flex-wrap: wrap;
+    align-items: flex-end;
+    justify-content: space-between;
+    gap: var(--space-5) var(--space-7);
+    padding: clamp(2rem, 1rem + 4vw, 4rem);
+    border-radius: var(--radius-2xl);
+    background: var(--color-band);
+    color: var(--color-on-dark-muted);
+  }
+
+  .dot {
+    position: absolute;
+    top: clamp(1.5rem, 1rem + 2vw, 3rem);
+    left: clamp(2rem, 1rem + 4vw, 4rem);
+    width: 0.625rem;
+    height: 0.625rem;
+    border-radius: 50%;
+    background: var(--color-gold-500);
+  }
+
+  .copy {
+    flex: 1 1 28rem;
+    padding-top: var(--space-5);
+  }
+
+  h2 {
+    color: var(--color-on-dark);
+    font-size: var(--text-h2);
+  }
+
+  p {
+    margin-top: var(--space-2);
+    font-size: var(--text-body-lg);
+    line-height: 1.7;
+  }
+</style>

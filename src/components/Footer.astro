@@ -1,0 +1,142 @@
+---
+import Icon from "./Icon.astro";
+import Logo from "./Logo.astro";
+import { NAV, SITE } from "../lib/site";
+import { toBanglaDigits } from "../lib/format";
+
+const year = toBanglaDigits(new Date().getFullYear());
+---
+
+<footer class="site-footer">
+  <div class="container">
+    <div class="top">
+      <div class="brand">
+        <Logo tone="dark" />
+        <p>{SITE.description}</p>
+        <a class="btn btn--light" href="/counseling/#sessions">
+          সেশন বুক করুন
+          <Icon name="arrow-right" />
+        </a>
+      </div>
+
+      <div class="columns">
+        <nav aria-labelledby="footer-pages">
+          <h2 id="footer-pages">পাতা</h2>
+          <ul>
+            {NAV.map((item) => <li><a href={item.href}>{item.label}</a></li>)}
+          </ul>
+        </nav>
+        <div>
+          <h2>যোগাযোগ</h2>
+          <ul class="contact">
+            <li>
+              <a href={`mailto:${SITE.email}`}><Icon name="mail" size={20} />{SITE.email}</a>
+            </li>
+            <li>
+              <a href="/contact/" data-contact-open><Icon name="chat" size={20} />বার্তা পাঠান</a>
+            </li>
+            <li>
+              <a href={SITE.linkedin.url} rel="me noopener" target="_blank"><Icon name="linkedin" size={20} />লিংকডইন</a>
+            </li>
+            <li>
+              <a href={SITE.youtube.url} rel="me noopener" target="_blank"><Icon name="youtube" size={20} />ইউটিউব</a>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </div>
+
+    <div class="bottom">
+      <p>© {year} {SITE.name}। সর্বস্বত্ব সংরক্ষিত।</p>
+      <a href="#top" class="to-top">উপরে ফিরে যান <Icon name="arrow-up" size={16} /></a>
+    </div>
+  </div>
+</footer>
+
+<style>
+  .site-footer {
+    padding: 5rem 0 2.5rem;
+    background: var(--color-band);
+    color: var(--color-on-dark-muted);
+  }
+
+  .top {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    gap: var(--space-7);
+  }
+
+  .brand {
+    display: grid;
+    justify-items: start;
+    gap: 1.375rem;
+    max-width: 23.75rem;
+  }
+
+  .brand p {
+    font-size: var(--text-small);
+    line-height: 1.68;
+  }
+
+  .columns {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--space-7) 7.5rem;
+  }
+
+  h2 {
+    margin-bottom: var(--space-4);
+    color: var(--color-on-dark-muted);
+    font-size: var(--text-label);
+    font-weight: 600;
+    line-height: 1.5;
+  }
+
+  ul {
+    display: grid;
+    gap: var(--space-4);
+    margin: 0;
+    padding: 0;
+    list-style: none;
+  }
+
+  li a {
+    display: inline-flex;
+    align-items: center;
+    gap: var(--space-3);
+    color: var(--color-on-dark);
+    font-size: var(--text-small);
+    line-height: 1.68;
+    text-decoration: none;
+  }
+
+  li a:hover {
+    text-decoration: underline;
+    text-underline-offset: 4px;
+  }
+
+  .contact :global(svg) {
+    color: var(--color-on-dark-muted);
+  }
+
+  .bottom {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: space-between;
+    gap: var(--space-4);
+    margin-top: var(--space-8);
+    padding-top: var(--space-6);
+    border-top: 1px solid rgb(255 255 255 / 0.16);
+    font-size: var(--text-meta);
+  }
+
+  .to-top {
+    display: inline-flex;
+    align-items: center;
+    gap: var(--space-2);
+    color: var(--color-on-dark);
+    text-decoration: none;
+  }
+</style>

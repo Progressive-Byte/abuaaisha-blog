@@ -1,0 +1,313 @@
+---
+import ArchFrame from "../components/ArchFrame.astro";
+import Icon from "../components/Icon.astro";
+import PostCard from "../components/PostCard.astro";
+import BaseLayout from "../layouts/BaseLayout.astro";
+import { getPublishedPosts } from "../lib/posts";
+import { SITE } from "../lib/site";
+
+const recent = (await getPublishedPosts()).slice(0, 6);
+
+const counselingTopics = [
+  "দাম্পত্য ও পারিবারিক সম্পর্ক",
+  "সন্তান প্রতিপালন ও প্যারেন্টিং",
+  "স্ক্রিন আসক্তি ও তরুণদের মানসিক চাপ",
+  "দ্বীনি জীবনযাপনে দিকনির্দেশনা",
+];
+
+const jsonLd = {
+  "@context": "https://schema.org",
+  "@type": "WebSite",
+  name: SITE.nameEn,
+  alternateName: SITE.name,
+  url: Astro.site?.href,
+  inLanguage: "bn",
+};
+---
+
+<BaseLayout jsonLd={jsonLd}>
+  <section class="hero lattice-band" aria-labelledby="hero-title">
+    <div class="container hero-grid">
+      <div class="intro">
+        <span class="overline overline--glass"><span class="gold-dot"></span>{SITE.name} · {SITE.tagline}</span>
+        <h1 id="hero-title">সমকালীন পৃথিবীতে মুসলিম জীবনের প্রশ্ন, ভাবনা ও সমাধানের খোঁজ</h1>
+        <p class="lede">
+          পরিবার, সন্তান প্রতিপালন, সমাজ আর দ্বীনের পথে অবিচল থাকার চ্যালেঞ্জ নিয়ে ব্যক্তিগত অভিজ্ঞতা থেকে লেখা—আর প্রয়োজনে আন্তরিক পরামর্শ।
+        </p>
+        <div class="actions">
+          <a class="btn btn--light" href="/counseling/#sessions">সেশন বুক করুন <Icon name="arrow-right" /></a>
+          <a class="btn btn--ghost-light" href="/posts/">লেখাগুলো পড়ুন</a>
+        </div>
+        <ul class="contact">
+          <li>
+            <span class="glass-icon"><Icon name="mail" size={20} /></span>
+            <span><small>ইমেইল করুন</small><a href={`mailto:${SITE.email}`}>{SITE.email}</a></span>
+          </li>
+          <li>
+            <span class="glass-icon"><Icon name="chat" size={20} /></span>
+            <span><small>বার্তা পাঠান</small><a href="/contact/" data-contact-open>যোগাযোগ ফর্ম</a></span>
+          </li>
+        </ul>
+      </div>
+      <ArchFrame src="/images/site/hero-desk.webp" alt="জানালার পাশে রেহালে রাখা কুরআন, খোলা খাতা আর কলম" />
+    </div>
+  </section>
+
+  <section class="section author" aria-labelledby="author-title">
+    <div class="container split">
+      <img
+        class="author-photo"
+        src="/images/site/author-village.webp"
+        alt="সন্ধ্যার আলোয় পুরোনো বাড়ির সামনে মাঠে ফুটবল খেলছে শিশুরা"
+        width="928"
+        height="1152"
+        loading="lazy"
+        decoding="async"
+      />
+      <div class="author-copy">
+        <span class="overline">লেখক পরিচিতি</span>
+        <h2 id="author-title">সালাফদের পদাঙ্ক অনুসরণ করে একজন অনুশীলনকারী মুসলিম হওয়ার চেষ্টা</h2>
+        <p>
+          নব্বইয়ের দশকে বেড়ে ওঠা আমি সেই সময়ের জীবনকে গভীরভাবে লালন করি—যে জীবন ছিল সামাজিক মেলামেশায় ভরপুর, প্রতিবেশী ও আত্মীয়স্বজনের মধ্যে ছিল সত্যিকারের আন্তরিক সম্পর্ক।
+        </p>
+        <blockquote>
+          আমার লেখাগুলোর মূল লক্ষ্য—আজকের পৃথিবীতে মুসলিমরা যেসব চ্যালেঞ্জের মুখোমুখি, সেগুলো চিহ্নিত করা এবং সম্ভাব্য সমাধান তুলে ধরা।
+        </blockquote>
+        <a class="btn btn--primary" href="/about/">পুরো পরিচিতি পড়ুন <Icon name="arrow-right" /></a>
+      </div>
+    </div>
+  </section>
+
+  <section class="section section--tint" aria-labelledby="recent-title">
+    <div class="container">
+      <div class="section-head">
+        <div>
+          <span class="overline">ব্লগ</span>
+          <h2 id="recent-title">সাম্প্রতিক লেখা</h2>
+          <p>দ্বীন, পরিবার আর সমকালীন সমাজ নিয়ে নতুন লেখাগুলো</p>
+        </div>
+        <a class="btn btn--outline" href="/posts/">সব লেখা দেখুন <Icon name="arrow-right" /></a>
+      </div>
+      <div class="post-grid">
+        {recent.map((post) => <PostCard post={post} />)}
+      </div>
+    </div>
+  </section>
+
+  <section class="section counseling" aria-labelledby="counseling-title">
+    <div class="container split split--reverse">
+      <div class="counseling-copy">
+        <span class="overline">ইসলামিক কাউন্সেলিং</span>
+        <h2 id="counseling-title">পারিবারিক ও ব্যক্তিগত জীবনের প্রশ্নে আন্তরিক পরামর্শ</h2>
+        <p>
+          দাম্পত্য, সন্তান প্রতিপালন কিংবা ব্যক্তিগত দুশ্চিন্তা—কোরআন-সুন্নাহর আলোকে ও বাস্তব অভিজ্ঞতা থেকে ধৈর্য নিয়ে আপনার কথা শোনা হবে এবং করণীয় নিয়ে পরামর্শ দেওয়া হবে।
+        </p>
+        <ul class="checklist">
+          {counselingTopics.map((t) => <li><Icon name="check-circle" />{t}</li>)}
+        </ul>
+        <p class="meta-row">
+          <span><Icon name="video" />অনলাইন ও সরাসরি সেশন</span>
+          <span><Icon name="lock" />সম্পূর্ণ গোপনীয়</span>
+        </p>
+        <div class="actions">
+          <a class="btn btn--primary" href="/counseling/#sessions">সেশন বুক করুন <Icon name="arrow-right" /></a>
+          <a class="btn btn--outline" href="/counseling/">বিস্তারিত দেখুন</a>
+        </div>
+      </div>
+      <img
+        class="counseling-photo"
+        src="/images/site/counseling.webp"
+        alt="ঘরোয়া পরিবেশে একজন কাউন্সেলরের সাথে কথা বলছেন এক দম্পতি"
+        width="1264"
+        height="848"
+        loading="lazy"
+        decoding="async"
+      />
+    </div>
+  </section>
+</BaseLayout>
+
+<style>
+  /* ---------- Hero ---------- */
+  .hero {
+    padding-block: clamp(3rem, 2rem + 4vw, 8.25rem);
+  }
+
+  .hero-grid {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) minmax(0, 31.75rem);
+    align-items: center;
+    gap: var(--space-7) 2.5rem;
+  }
+
+  .intro {
+    display: grid;
+    justify-items: start;
+    max-width: 43.25rem;
+  }
+
+  .gold-dot {
+    width: 0.5rem;
+    height: 0.5rem;
+    border-radius: 50%;
+    background: var(--color-gold-500);
+  }
+
+  .hero h1 {
+    margin-top: 1.75rem;
+    font-size: var(--text-hero);
+    font-weight: 700;
+    line-height: 1.24;
+    letter-spacing: -0.023em;
+  }
+
+  .lede {
+    margin-top: 1.75rem;
+    color: var(--color-on-dark);
+    font-size: var(--text-body-lg);
+    line-height: 1.7;
+    opacity: 0.9;
+  }
+
+  .actions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--space-4);
+    margin-top: var(--space-6);
+  }
+
+  .contact {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--space-5) var(--space-7);
+    margin: var(--space-7) 0 0;
+    padding: 0;
+    list-style: none;
+  }
+
+  .contact li {
+    display: flex;
+    align-items: center;
+    gap: var(--space-4);
+  }
+
+  .contact small {
+    display: block;
+    color: var(--color-on-dark-muted);
+    font-size: var(--text-meta);
+    line-height: 1.5;
+  }
+
+  .contact a {
+    color: var(--color-on-dark);
+    font-size: var(--text-h5);
+    font-weight: 600;
+    line-height: 1.5;
+    text-decoration: none;
+    overflow-wrap: anywhere;
+  }
+
+  .contact a:hover {
+    text-decoration: underline;
+  }
+
+  .glass-icon {
+    display: grid;
+    flex: none;
+    place-items: center;
+    width: 3.5rem;
+    height: 3.5rem;
+    border: 1px solid var(--color-glass-line);
+    border-radius: 999px;
+    background: var(--color-glass);
+    color: var(--color-on-dark);
+  }
+
+  @media (max-width: 60rem) {
+    .hero-grid {
+      grid-template-columns: 1fr;
+    }
+
+    .hero-grid :global(.arch) {
+      justify-self: center;
+      width: min(100%, 22rem);
+      order: -1;
+    }
+  }
+
+  /* ---------- Split rows ---------- */
+  .split {
+    display: grid;
+    grid-template-columns: minmax(0, 32.5rem) minmax(0, 1fr);
+    align-items: center;
+    gap: var(--space-7) 5.5rem;
+  }
+
+  .split--reverse {
+    grid-template-columns: minmax(0, 1fr) minmax(0, 36.25rem);
+  }
+
+  .author-photo,
+  .counseling-photo {
+    width: 100%;
+    border-radius: var(--radius-xl);
+    object-fit: cover;
+  }
+
+  .author-photo {
+    aspect-ratio: 520 / 600;
+  }
+
+  .counseling-photo {
+    aspect-ratio: 580 / 560;
+  }
+
+  .author-copy,
+  .counseling-copy {
+    display: grid;
+    justify-items: start;
+    gap: var(--space-5);
+  }
+
+  .author-copy h2,
+  .counseling-copy h2 {
+    font-size: var(--text-h2);
+    letter-spacing: -0.02em;
+  }
+
+  .author-copy > p,
+  .counseling-copy > p:not(.meta-row) {
+    font-size: var(--text-body-lg);
+    line-height: 1.7;
+  }
+
+  blockquote {
+    margin: 0;
+    padding: 0.25rem 0 0.25rem 1.5rem;
+    border-left: 3px solid var(--color-accent-700);
+    color: var(--color-ink-900);
+    font-size: var(--text-body-lg);
+    font-weight: 600;
+    line-height: 1.7;
+  }
+
+  .counseling-copy .actions {
+    margin-top: var(--space-2);
+  }
+
+  @media (max-width: 60rem) {
+    .split,
+    .split--reverse {
+      grid-template-columns: 1fr;
+    }
+
+    .author-photo {
+      aspect-ratio: 4 / 3;
+    }
+
+    .counseling-photo {
+      order: -1;
+      aspect-ratio: 3 / 2;
+    }
+  }
+</style>

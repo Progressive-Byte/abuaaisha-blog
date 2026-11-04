@@ -1,0 +1,129 @@
+---
+import CategoryBadge from "./CategoryBadge.astro";
+import Icon from "./Icon.astro";
+import PostCover from "./PostCover.astro";
+import { formatDualDate, readingTimeLabel } from "../lib/format";
+import type { Post } from "../lib/posts";
+
+interface Props {
+  post: Post;
+  headingLevel?: 2 | 3;
+  eager?: boolean;
+}
+
+const { post, headingLevel = 3, eager = false } = Astro.props;
+const { title, summary, date, categories, image, imageAlt, lang } = post.data;
+const href = `/posts/${post.id}/`;
+const Heading = headingLevel === 2 ? "h2" : "h3";
+---
+
+<article class="post-card" lang={lang}>
+  <PostCover src={image} alt={imageAlt} category={categories[0]} eager={eager} />
+  <div class="body">
+    <div class="meta-top">
+      <CategoryBadge category={categories[0]} />
+      <span class="read"><Icon name="clock" size={16} />{readingTimeLabel(post.body ?? "")}</span>
+    </div>
+    <Heading class="title"><a href={href}>{title}</a></Heading>
+    <p class="summary">{summary}</p>
+    <p class="date">
+      <Icon name="calendar" size={16} />
+      <time datetime={date.toISOString().slice(0, 10)}>{formatDualDate(date)}</time>
+    </p>
+  </div>
+</article>
+
+<style>
+  .post-card {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+    border: 1px solid var(--color-line);
+    border-radius: var(--radius-lg);
+    background: var(--color-surface);
+    box-shadow: var(--shadow-card);
+    transition:
+      box-shadow 0.2s,
+      transform 0.2s;
+  }
+
+  .post-card:hover {
+    box-shadow: var(--shadow-card-hover);
+  }
+
+  @media (prefers-reduced-motion: no-preference) {
+    .post-card:hover {
+      transform: translateY(-3px);
+    }
+  }
+
+  .post-card:focus-within {
+    outline: 3px solid var(--color-focus);
+    outline-offset: 2px;
+  }
+
+  .body {
+    display: flex;
+    flex: 1;
+    flex-direction: column;
+    gap: var(--space-3);
+    padding: 1.25rem 1.5rem 1.5rem;
+  }
+
+  .meta-top {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: var(--space-3);
+  }
+
+  .read,
+  .date {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.375rem;
+    color: var(--color-ink-500);
+    font-size: var(--text-meta);
+    line-height: 1.5;
+  }
+
+  .title {
+    margin-top: var(--space-1);
+    font-size: var(--text-h4);
+    line-height: 1.45;
+    letter-spacing: -0.0125em;
+  }
+
+  .title a {
+    text-decoration: none;
+  }
+
+  /* Whole card is clickable; the link stays the accessible name. */
+  .title a::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+  }
+
+  .title a:focus-visible {
+    outline: none;
+  }
+
+  .summary {
+    display: -webkit-box;
+    overflow: hidden;
+    color: var(--color-ink-700);
+    font-size: var(--text-body);
+    line-height: 1.72;
+    -webkit-box-orient: vertical;
+    -webkit-line-clamp: 3;
+    line-clamp: 3;
+  }
+
+  .date {
+    margin-top: auto;
+    padding-top: var(--space-4);
+    border-top: 1px solid var(--color-line);
+  }
+</style>

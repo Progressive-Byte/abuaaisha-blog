@@ -1,0 +1,83 @@
+---
+// A post's cover photo, or — for posts without one — the navy khatam placeholder
+// with the category icon, so every card keeps the same rhythm.
+import Icon from "./Icon.astro";
+import { CATEGORY_META } from "../lib/site";
+import { THUMB_WIDTH, thumbFor } from "../lib/images";
+import type { Category } from "../lib/post-schema";
+
+interface Props {
+  src?: string;
+  alt?: string;
+  category: Category;
+  sizes?: string;
+  eager?: boolean;
+  class?: string;
+}
+
+const { src, alt = "", category, sizes = "(min-width: 64rem) 400px, 100vw", eager = false, class: className } = Astro.props;
+const thumb = thumbFor(src);
+const srcset = thumb ? `${thumb} ${THUMB_WIDTH}w, ${src} 1600w` : undefined;
+---
+
+{
+  src ? (
+    <img
+      class:list={["cover", className]}
+      src={src}
+      srcset={srcset}
+      sizes={srcset ? sizes : undefined}
+      alt={alt}
+      width="1170"
+      height="785"
+      loading={eager ? "eager" : "lazy"}
+      fetchpriority={eager ? "high" : undefined}
+      decoding="async"
+    />
+  ) : (
+    <div class:list={["cover placeholder", className]} role="presentation">
+      <span class="glyph">
+        <Icon name={CATEGORY_META[category].icon} size={28} />
+      </span>
+    </div>
+  )
+}
+
+<style>
+  .cover {
+    width: 100%;
+    aspect-ratio: 390 / 250;
+    object-fit: cover;
+    background: var(--color-paper-deep);
+  }
+
+  .placeholder {
+    position: relative;
+    display: grid;
+    place-items: center;
+    overflow: hidden;
+    background:
+      radial-gradient(circle at 50% 50%, rgb(201 165 92 / 0.18), transparent 60%),
+      linear-gradient(135deg, var(--color-placeholder-from), var(--color-placeholder-to));
+  }
+
+  .placeholder::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background: url("/images/site/khatam-tile.svg") center / 50% auto;
+    opacity: 0.35;
+  }
+
+  .glyph {
+    position: relative;
+    display: grid;
+    place-items: center;
+    width: 4rem;
+    height: 4rem;
+    border: 1px solid rgb(255 255 255 / 0.2);
+    border-radius: 999px;
+    background: rgb(255 255 255 / 0.1);
+    color: var(--color-on-dark);
+  }
+</style>

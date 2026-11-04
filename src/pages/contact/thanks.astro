@@ -1,0 +1,49 @@
+---
+import Icon from "../../components/Icon.astro";
+import BaseLayout from "../../layouts/BaseLayout.astro";
+---
+
+<BaseLayout title="বার্তা পাঠানো হয়েছে" noindex>
+  <section class="container thanks">
+    <span class="badge"><Icon name="check-circle" size={32} /></span>
+    <h1>জাযাকাল্লাহু খাইরান!</h1>
+    <p>আপনার বার্তা পৌঁছেছে। সাধারণত ২৪ ঘণ্টার মধ্যে উত্তর দেওয়া হয়।</p>
+    <div class="actions">
+      <a class="btn btn--primary" href="/posts/">লেখাগুলো পড়ুন <Icon name="arrow-right" /></a>
+      <a class="btn btn--outline" href="/">হোমে ফিরে যান</a>
+    </div>
+  </section>
+</BaseLayout>
+
+<style>
+  .thanks {
+    display: grid;
+    justify-items: center;
+    gap: var(--space-4);
+    max-width: 40rem;
+    padding-block: var(--space-9);
+    text-align: center;
+  }
+
+  .badge {
+    display: grid;
+    place-items: center;
+    width: 4.5rem;
+    height: 4.5rem;
+    border-radius: 999px;
+    background: var(--color-accent-50);
+    color: var(--color-accent-700);
+  }
+
+  h1 {
+    font-size: var(--text-h2);
+  }
+
+  .actions {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: var(--space-3);
+    margin-top: var(--space-4);
+  }
+</style>

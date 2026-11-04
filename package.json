@@ -1,0 +1,35 @@
+{
+  "name": "abuaaisha",
+  "type": "module",
+  "version": "2.0.0",
+  "private": true,
+  "engines": {
+    "node": ">=22.12.0"
+  },
+  "scripts": {
+    "predev": "node scripts/make-thumbs.mjs",
+    "dev": "astro dev",
+    "prebuild": "node scripts/make-thumbs.mjs",
+    "build": "astro check && astro build && pagefind --site dist",
+    "preview": "astro preview",
+    "check": "astro check",
+    "format": "prettier --write ."
+  },
+  "dependencies": {
+    "@astrojs/rss": "^4.0.19",
+    "@astrojs/sitemap": "^3.7.4",
+    "@fontsource/hind-siliguri": "^5.3.0",
+    "@google/genai": "^2.31.0",
+    "astro": "^7.4.2",
+    "sharp": "^0.35.5",
+    "zod": "^4.6.7"
+  },
+  "devDependencies": {
+    "@astrojs/check": "^0.9.12",
+    "@netlify/functions": "^6.0.3",
+    "pagefind": "^1.5.2",
+    "prettier": "^3.9.10",
+    "prettier-plugin-astro": "^1.1.2",
+    "typescript": "^5.9.0"
+  }
+}

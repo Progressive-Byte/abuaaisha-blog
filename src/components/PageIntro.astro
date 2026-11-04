@@ -1,0 +1,35 @@
+---
+// Plain page heading used by the blog and category listings.
+interface Props {
+  title: string;
+  lede?: string;
+}
+
+const { title, lede } = Astro.props;
+---
+
+<header class="page-intro">
+  <h1>{title}</h1>
+  {lede && <p>{lede}</p>}
+</header>
+
+<style>
+  .page-intro {
+    padding-block: clamp(3rem, 2rem + 3vw, 5.5rem) var(--space-6);
+  }
+
+  h1 {
+    font-size: var(--text-hero);
+    font-weight: 700;
+    line-height: 1.24;
+    letter-spacing: -0.023em;
+  }
+
+  p {
+    margin-top: var(--space-3);
+    max-width: 48rem;
+    color: var(--color-ink-500);
+    font-size: var(--text-body-lg);
+    line-height: 1.7;
+  }
+</style>

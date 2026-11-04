@@ -1,0 +1,172 @@
+---
+// Netlify Forms: submissions arrive in the Netlify dashboard and by email notification.
+// No server or database of our own. The honeypot field filters most spam.
+import Icon from "./Icon.astro";
+import { CONTACT_SUBJECTS } from "../lib/site";
+
+interface Props {
+  idPrefix: string;
+}
+
+const { idPrefix } = Astro.props;
+const id = (name: string) => `${idPrefix}-${name}`;
+---
+
+<form
+  class="contact-form"
+  name="contact"
+  method="POST"
+  action="/contact/thanks/"
+  data-netlify="true"
+  netlify-honeypot="bot-field"
+>
+  <input type="hidden" name="form-name" value="contact" />
+  <p class="visually-hidden">
+    <label>এই ঘরটি পূরণ করবেন না: <input name="bot-field" tabindex="-1" autocomplete="off" /></label>
+  </p>
+
+  <div class="row">
+    <div class="field">
+      <label for={id("name")}>আপনার নাম</label>
+      <div class="input">
+        <Icon name="user" size={20} />
+        <input id={id("name")} name="name" type="text" placeholder="নাম লিখুন" autocomplete="name" required />
+      </div>
+    </div>
+    <div class="field">
+      <label for={id("email")}>ইমেইল ঠিকানা</label>
+      <div class="input">
+        <Icon name="mail" size={20} />
+        <input
+          id={id("email")}
+          name="email"
+          type="email"
+          placeholder="example@mail.com"
+          autocomplete="email"
+          inputmode="email"
+          required
+        />
+      </div>
+    </div>
+  </div>
+
+  <div class="field">
+    <label for={id("subject")}>বিষয়</label>
+    <div class="input input--select">
+      <Icon name="chat" size={20} />
+      <select id={id("subject")} name="subject" data-contact-subject>
+        {CONTACT_SUBJECTS.map((s) => <option value={s}>{s}</option>)}
+      </select>
+      <Icon name="chevron-down" size={20} class="chevron" />
+    </div>
+  </div>
+
+  <div class="field">
+    <label for={id("message")}>আপনার বার্তা</label>
+    <textarea id={id("message")} name="message" rows="5" placeholder="এখানে বিস্তারিত লিখুন…" required></textarea>
+  </div>
+
+  <button class="btn btn--primary btn--block" type="submit">
+    বার্তা পাঠান
+    <Icon name="send" />
+  </button>
+
+  <p class="privacy"><Icon name="lock" size={18} />আপনার তথ্য সম্পূর্ণ গোপন রাখা হবে।</p>
+</form>
+
+<style>
+  .contact-form {
+    display: grid;
+    gap: 1.75rem;
+  }
+
+  .row {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(min(100%, 14rem), 1fr));
+    gap: var(--space-4);
+  }
+
+  .field {
+    display: grid;
+    gap: 0.625rem;
+  }
+
+  label {
+    color: var(--color-ink-900);
+    font-size: var(--text-ui);
+    font-weight: 500;
+    line-height: 1.5;
+  }
+
+  .input,
+  textarea {
+    border: 1.5px solid var(--color-line-strong);
+    border-radius: var(--radius);
+    background: var(--color-surface);
+    transition: border-color 0.15s;
+  }
+
+  .input {
+    position: relative;
+    display: flex;
+    align-items: center;
+    gap: 0.625rem;
+    height: 3.75rem;
+    padding-inline: var(--space-4);
+    color: var(--color-ink-500);
+  }
+
+  .input:focus-within,
+  textarea:focus {
+    border-color: var(--color-accent-700);
+  }
+
+  .input input,
+  .input select {
+    flex: 1;
+    min-width: 0;
+    height: 100%;
+    border: 0;
+    background: transparent;
+    color: var(--color-ink-900);
+    font-size: var(--text-small);
+    outline: none;
+  }
+
+  .input--select select {
+    appearance: none;
+    padding-right: 1.75rem;
+    cursor: pointer;
+  }
+
+  .input--select :global(.chevron) {
+    position: absolute;
+    right: var(--space-4);
+    pointer-events: none;
+  }
+
+  ::placeholder {
+    color: var(--color-ink-500);
+    opacity: 1;
+  }
+
+  textarea {
+    min-height: 9.375rem;
+    padding: var(--space-4);
+    color: var(--color-ink-900);
+    font-size: var(--text-small);
+    line-height: 1.68;
+    resize: vertical;
+    outline: none;
+  }
+
+  .privacy {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: var(--space-2);
+    margin-top: calc(-1 * var(--space-3));
+    color: var(--color-ink-500);
+    font-size: var(--text-meta);
+  }
+</style>

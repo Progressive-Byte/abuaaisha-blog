@@ -1,0 +1,28 @@
+---
+import BlogIndex from "../../components/BlogIndex.astro";
+import PageIntro from "../../components/PageIntro.astro";
+import BaseLayout from "../../layouts/BaseLayout.astro";
+import { listingPaths, type ListingProps } from "../../lib/listing";
+import { getPublishedPosts } from "../../lib/posts";
+import { toBanglaDigits } from "../../lib/format";
+
+export async function getStaticPaths() {
+  return listingPaths(await getPublishedPosts());
+}
+
+const props = Astro.props as ListingProps;
+const suffix = props.current > 1 ? ` — পাতা ${toBanglaDigits(props.current)}` : "";
+---
+
+<BaseLayout title={`ব্লগ${suffix}`} description="দ্বীন, পরিবার, সন্তান প্রতিপালন আর সমকালীন সমাজ নিয়ে সব লেখা এক জায়গায়।">
+  <div class="container listing">
+    <PageIntro title="ব্লগ" lede="দ্বীন, পরিবার, সন্তান প্রতিপালন আর সমকালীন সমাজ নিয়ে সব লেখা এক জায়গায়।" />
+    <BlogIndex {...props} />
+  </div>
+</BaseLayout>
+
+<style>
+  .listing {
+    padding-bottom: var(--space-9);
+  }
+</style>

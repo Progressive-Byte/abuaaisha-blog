@@ -1,0 +1,528 @@
+---
+import Icon from "../components/Icon.astro";
+import BaseLayout from "../layouts/BaseLayout.astro";
+import { SITE } from "../lib/site";
+
+const topics = [
+  { icon: "rings", label: "দাম্পত্য সম্পর্ক" },
+  { icon: "family", label: "প্যারেন্টিং" },
+  { icon: "phone", label: "স্ক্রিন আসক্তি" },
+  { icon: "heart", label: "বিবাহপূর্ব পরামর্শ" },
+  { icon: "shield", label: "পারিবারিক বিরোধ" },
+  { icon: "chat", label: "ব্যক্তিগত দুশ্চিন্তা" },
+];
+
+// TODO(owner): confirm prices and durations — they are the values shown in the Figma design.
+const sessions = [
+  {
+    name: "সংক্ষিপ্ত সেশন",
+    mode: { icon: "video", label: "অনলাইন" },
+    duration: "৩০ মিনিট",
+    price: "৳১,৫০০",
+    features: ["একটি নির্দিষ্ট বিষয়ে পরামর্শ", "ভিডিও বা অডিও কলে"],
+    subject: "সেশন বুকিং: সংক্ষিপ্ত সেশন",
+    featured: false,
+  },
+  {
+    name: "পূর্ণাঙ্গ সেশন",
+    mode: { icon: "video", label: "অনলাইন" },
+    duration: "৬০ মিনিট",
+    price: "৳২,৫০০",
+    features: ["বিস্তারিত আলোচনা", "দম্পতি একসাথে অংশ নিতে পারবেন"],
+    subject: "সেশন বুকিং: পূর্ণাঙ্গ সেশন",
+    featured: true,
+  },
+  {
+    name: "সরাসরি সাক্ষাৎ",
+    mode: { icon: "map-pin", label: "সরাসরি" },
+    duration: "৬০ মিনিট",
+    price: "৳৩,৫০০",
+    features: ["মুখোমুখি আলোচনা", "পারিবারিক সেশনের সুযোগ"],
+    subject: "সেশন বুকিং: সরাসরি সাক্ষাৎ",
+    featured: false,
+  },
+];
+
+const steps = [
+  { title: "সেশন বেছে নিন", text: "প্রয়োজন অনুযায়ী" },
+  { title: "সময় ও ফি নিশ্চিত করুন", text: "অনলাইনে পেমেন্ট" },
+  { title: "নির্ধারিত সময়ে কথা বলুন", text: "ভিডিও কল বা সাক্ষাতে" },
+];
+
+const channels = [
+  { icon: "mail", label: "ইমেইল", value: SITE.email, href: `mailto:${SITE.email}` },
+  { icon: "chat", label: "যোগাযোগ ফর্ম", value: "বার্তা পাঠান", href: "/contact/", modal: true },
+  { icon: "linkedin", label: "লিংকডইন", value: SITE.linkedin.label, href: SITE.linkedin.url },
+  { icon: "youtube", label: "ইউটিউব", value: SITE.youtube.label, href: SITE.youtube.url },
+];
+---
+
+<BaseLayout
+  title="ইসলামিক কাউন্সেলিং"
+  description="দাম্পত্য, প্যারেন্টিং ও ব্যক্তিগত দুশ্চিন্তায় কোরআন-সুন্নাহর আলোকে আন্তরিক পরামর্শ—অনলাইনে বা সরাসরি।"
+  image="/images/site/counseling-hero.webp"
+>
+  <section class="hero" aria-labelledby="counseling-title">
+    <img class="hero-bg" src="/images/site/counseling-hero.webp" alt="" width="1584" height="672" fetchpriority="high" />
+    <div class="container hero-copy">
+      <span class="overline overline--glass"><Icon name="star" />ইসলামিক কাউন্সেলিং</span>
+      <h1 id="counseling-title">পারিবারিক জীবনের জটিলতায় আন্তরিক পরামর্শ</h1>
+      <p>কোরআন-সুন্নাহর আলোকে, ধৈর্য নিয়ে আপনার কথা শোনা হবে।</p>
+      <a class="btn btn--light" href="#sessions">সেশন বুক করুন <Icon name="arrow-right" /></a>
+    </div>
+  </section>
+
+  <section class="section" aria-labelledby="topics-title">
+    <div class="container">
+      <div class="section-head section-head--center">
+        <h2 id="topics-title">যেসব বিষয়ে পরামর্শ দেওয়া হয়</h2>
+      </div>
+      <ul class="topics">
+        {
+          topics.map((t) => (
+            <li>
+              <span class="topic-icon"><Icon name={t.icon} size={29} /></span>
+              {t.label}
+            </li>
+          ))
+        }
+      </ul>
+    </div>
+  </section>
+
+  <section class="section section--tint" id="sessions" aria-labelledby="sessions-title">
+    <div class="container">
+      <div class="section-head section-head--center">
+        <h2 id="sessions-title">সেশন বেছে নিন</h2>
+        <p>অনলাইনে বা সরাসরি—আপনার সুবিধামতো</p>
+      </div>
+      <div class="sessions">
+        {
+          sessions.map((s) => (
+            <article class:list={["session", { featured: s.featured }]}>
+              <div class="session-top">
+                <h3>{s.name}</h3>
+                {s.featured && <span class="popular">জনপ্রিয়</span>}
+              </div>
+              <p class="meta-row">
+                <span><Icon name={s.mode.icon} size={20} />{s.mode.label}</span>
+                <span><Icon name="clock" size={20} />{s.duration}</span>
+              </p>
+              <p class="price">
+                <strong>{s.price}</strong> <span>/ সেশন</span>
+              </p>
+              <ul class="checklist">
+                {s.features.map((f) => (
+                  <li>
+                    <Icon name="check-circle" />
+                    {f}
+                  </li>
+                ))}
+              </ul>
+              <a
+                class:list={["btn btn--block", s.featured ? "btn--light" : "btn--outline"]}
+                href="/contact/"
+                data-contact-open
+                data-subject={s.subject}
+              >
+                সেশন বুক করুন <Icon name="arrow-right" />
+              </a>
+            </article>
+          ))
+        }
+      </div>
+      <p class="note"><Icon name="lock" size={20} />সব সেশন সম্পূর্ণ গোপনীয় এবং রেকর্ড করা হয় না</p>
+    </div>
+  </section>
+
+  <section class="section" aria-labelledby="steps-title">
+    <div class="container">
+      <div class="section-head section-head--center">
+        <h2 id="steps-title">যেভাবে বুক করবেন</h2>
+      </div>
+      <ol class="steps">
+        {
+          steps.map((s, i) => (
+            <li>
+              <span class="num">{["১", "২", "৩"][i]}</span>
+              <strong>{s.title}</strong>
+              <span>{s.text}</span>
+            </li>
+          ))
+        }
+      </ol>
+      <div class="center">
+        <a class="btn btn--primary" href="#sessions">সেশন বুক করুন <Icon name="arrow-right" /></a>
+      </div>
+    </div>
+  </section>
+
+  <section class="contact-section" aria-labelledby="contact-title">
+    <div class="container">
+      <div class="contact-card">
+        <h2 id="contact-title">প্রশ্ন আছে? সরাসরি যোগাযোগ করুন</h2>
+        <ul class="channels">
+          {
+            channels.map((c) => (
+              <li>
+                <a
+                  href={c.href}
+                  data-contact-open={c.modal ? "" : undefined}
+                  target={c.href.startsWith("https") ? "_blank" : undefined}
+                  rel={c.href.startsWith("https") ? "me noopener" : undefined}
+                >
+                  <span class="ch-icon"><Icon name={c.icon} size={20} /></span>
+                  <span class="ch-text">
+                    <small>{c.label}</small>
+                    <strong>{c.value}</strong>
+                  </span>
+                </a>
+              </li>
+            ))
+          }
+        </ul>
+      </div>
+    </div>
+  </section>
+</BaseLayout>
+
+<style>
+  /* ---------- Hero ---------- */
+  .hero {
+    position: relative;
+    isolation: isolate;
+    display: grid;
+    align-items: center;
+    min-height: clamp(30rem, 20rem + 25vw, 45rem);
+    overflow: hidden;
+    background: var(--color-band);
+  }
+
+  .hero-bg {
+    position: absolute;
+    inset: 0;
+    z-index: -2;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: 75% center;
+  }
+
+  .hero::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    z-index: -1;
+    background: linear-gradient(90deg, rgb(10 23 48 / 0.95) 0%, rgb(10 23 48 / 0.8) 42%, rgb(10 23 48 / 0.18) 66%, rgb(10 23 48 / 0.02) 100%);
+  }
+
+  .hero-copy {
+    display: grid;
+    justify-items: start;
+    gap: 1.75rem;
+    padding-block: var(--space-8);
+    color: var(--color-on-dark);
+  }
+
+  .hero h1 {
+    max-width: 47.5rem;
+    color: var(--color-on-dark);
+    font-size: var(--text-hero);
+    font-weight: 700;
+    line-height: 1.24;
+  }
+
+  .hero-copy > p {
+    max-width: 38.75rem;
+    font-size: var(--text-body-lg);
+    line-height: 1.7;
+    opacity: 0.9;
+  }
+
+  @media (max-width: 48rem) {
+    .hero::after {
+      background: linear-gradient(180deg, rgb(10 23 48 / 0.7), rgb(10 23 48 / 0.92));
+    }
+  }
+
+  /* ---------- Topics ---------- */
+  .topics {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(min(100%, 9rem), 1fr));
+    gap: clamp(0.75rem, 0.5rem + 1vw, 1.25rem);
+    margin: 0;
+    padding: 0;
+    list-style: none;
+  }
+
+  .topics li {
+    display: grid;
+    justify-items: center;
+    gap: 1.125rem;
+    padding: 2rem 1rem;
+    border: 1px solid var(--color-line);
+    border-radius: var(--radius-lg);
+    background: var(--color-surface);
+    box-shadow: var(--shadow-card);
+    color: var(--color-ink-900);
+    font-size: var(--text-h5);
+    font-weight: 600;
+    text-align: center;
+  }
+
+  .topic-icon {
+    display: grid;
+    place-items: center;
+    width: 4rem;
+    height: 4rem;
+    border-radius: 999px;
+    background: var(--color-accent-50);
+    color: var(--color-accent-700);
+  }
+
+  /* ---------- Sessions ---------- */
+  .sessions {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(min(100%, 20rem), 1fr));
+    gap: var(--space-6);
+  }
+
+  .session {
+    display: flex;
+    flex-direction: column;
+    gap: 1.25rem;
+    padding: 2.25rem;
+    border: 1px solid var(--color-line);
+    border-radius: var(--radius-xl);
+    background: var(--color-surface);
+    box-shadow: var(--shadow-card);
+  }
+
+  .session-top {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+
+  .session h3 {
+    font-size: var(--text-h4);
+  }
+
+  .price {
+    display: flex;
+    align-items: flex-end;
+    gap: var(--space-2);
+    padding-block: var(--space-2);
+    padding-bottom: var(--space-5);
+    border-bottom: 1px solid var(--color-line);
+  }
+
+  .price strong {
+    color: var(--color-ink-900);
+    font-size: clamp(2.5rem, 2rem + 1.5vw, 3.25rem);
+    font-weight: 600;
+    line-height: 1.28;
+    letter-spacing: -0.01em;
+  }
+
+  .price span {
+    padding-bottom: 0.5rem;
+    color: var(--color-ink-500);
+    font-size: var(--text-meta);
+  }
+
+  .session .checklist {
+    flex: 1;
+    align-content: start;
+  }
+
+  .featured {
+    border-color: transparent;
+    background: var(--color-band);
+    box-shadow: 0 24px 24px rgb(10 23 48 / 0.25);
+    color: var(--color-on-dark);
+  }
+
+  .featured h3,
+  .featured .price strong {
+    color: var(--color-on-dark);
+  }
+
+  .featured .meta-row,
+  .featured .price span {
+    color: var(--color-on-dark-muted);
+  }
+
+  .featured .price {
+    border-bottom-color: rgb(255 255 255 / 0.18);
+  }
+
+  .featured .checklist :global(svg) {
+    color: var(--color-gold-500);
+  }
+
+  .popular {
+    padding: 0.25rem 0.75rem;
+    border-radius: var(--radius-sm);
+    background: var(--color-gold-500);
+    color: var(--color-on-dark);
+    font-size: var(--text-label);
+    font-weight: 600;
+  }
+
+  .note {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.625rem;
+    margin-top: var(--space-8);
+    color: var(--color-ink-500);
+    text-align: center;
+  }
+
+  /* ---------- Steps ---------- */
+  .steps {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    margin: 0;
+    padding: 0;
+    list-style: none;
+  }
+
+  .steps li {
+    position: relative;
+    display: grid;
+    justify-items: center;
+    gap: 0.875rem;
+    padding-inline: var(--space-3);
+    text-align: center;
+  }
+
+  /* Connector line between step markers */
+  .steps li:not(:last-child)::after {
+    content: "";
+    position: absolute;
+    top: 2rem;
+    left: calc(50% + 2rem);
+    width: calc(100% - 4rem);
+    height: 2px;
+    background: var(--color-line-strong);
+  }
+
+  .num {
+    display: grid;
+    place-items: center;
+    width: 4rem;
+    height: 4rem;
+    margin-bottom: var(--space-1);
+    border-radius: 999px;
+    background: var(--color-btn);
+    color: var(--color-on-dark);
+    font-size: var(--text-h4);
+    font-weight: 600;
+  }
+
+  .steps strong {
+    color: var(--color-ink-900);
+    font-size: var(--text-h4);
+    font-weight: 600;
+    line-height: 1.45;
+  }
+
+  .steps span:last-child {
+    color: var(--color-ink-500);
+  }
+
+  .center {
+    display: flex;
+    justify-content: center;
+    margin-top: var(--space-8);
+  }
+
+  @media (max-width: 40rem) {
+    .steps {
+      grid-template-columns: 1fr;
+      gap: var(--space-6);
+    }
+
+    .steps li:not(:last-child)::after {
+      display: none;
+    }
+  }
+
+  /* ---------- Contact card ---------- */
+  .contact-section {
+    padding-bottom: var(--space-9);
+  }
+
+  .contact-card {
+    display: grid;
+    gap: 2.25rem;
+    padding: clamp(1.75rem, 1rem + 3vw, 4rem);
+    border-radius: var(--radius-2xl);
+    background: var(--color-band);
+  }
+
+  .contact-card h2 {
+    color: var(--color-on-dark);
+    font-size: var(--text-h2);
+    text-align: center;
+  }
+
+  .channels {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: var(--space-4);
+    margin: 0;
+    padding: 0;
+    list-style: none;
+  }
+
+  .channels a {
+    display: flex;
+    align-items: center;
+    gap: 0.875rem;
+    padding: 1.125rem 1.25rem 1.125rem 1.125rem;
+    border: 1px solid rgb(255 255 255 / 0.12);
+    border-radius: var(--radius-md);
+    background: rgb(255 255 255 / 0.07);
+    color: var(--color-on-dark);
+    text-decoration: none;
+  }
+
+  .channels a:hover {
+    background: rgb(255 255 255 / 0.12);
+  }
+
+  @media (max-width: 48rem) {
+    .channels {
+      grid-template-columns: 1fr;
+    }
+  }
+
+  .ch-icon {
+    display: grid;
+    flex: none;
+    place-items: center;
+    width: 2.75rem;
+    height: 2.75rem;
+    border-radius: 999px;
+    background: rgb(255 255 255 / 0.12);
+  }
+
+  .ch-text {
+    display: grid;
+    line-height: 1.5;
+  }
+
+  .ch-text small {
+    color: var(--color-on-dark-muted);
+    font-size: var(--text-meta);
+  }
+
+  .ch-text strong {
+    font-size: var(--text-ui);
+    font-weight: 600;
+    overflow-wrap: anywhere;
+  }
+</style>

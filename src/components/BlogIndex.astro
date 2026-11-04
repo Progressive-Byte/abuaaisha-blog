@@ -1,0 +1,300 @@
+---
+// Blog listing (Figma frame 02): category tabs, title search, sort order, card grid, pagination.
+import Icon from "./Icon.astro";
+import Pagination from "./Pagination.astro";
+import PostCard from "./PostCard.astro";
+import { CATEGORIES, type Category } from "../lib/post-schema";
+import { CATEGORY_META } from "../lib/site";
+import type { ListingProps } from "../lib/listing";
+
+interface Props extends ListingProps {
+  category?: Category;
+}
+
+const { posts, current, total, sort, category } = Astro.props;
+const base = category ? `/categories/${category}/` : "/posts/";
+const sortBase = sort === "old" ? `${base}oldest/` : base;
+
+const tabs = [
+  { href: "/posts/", label: "সব লেখা", icon: "grid", active: !category },
+  ...CATEGORIES.map((c) => ({
+    href: `/categories/${c}/`,
+    label: CATEGORY_META[c].label,
+    icon: CATEGORY_META[c].icon,
+    active: c === category,
+  })),
+];
+---
+
+<div class="toolbar">
+  <nav class="tabs" aria-label="বিভাগ">
+    {
+      tabs.map((t) => (
+        <a href={t.href} class:list={["tab", { active: t.active }]} aria-current={t.active ? "page" : undefined}>
+          <Icon name={t.icon} size={18} />
+          {t.label}
+        </a>
+      ))
+    }
+  </nav>
+
+  <div class="tools">
+    <form class="search" role="search" action="/posts/" data-search>
+      <label class="visually-hidden" for="post-search">লেখা খুঁজুন</label>
+      <Icon name="search" size={20} />
+      <input id="post-search" type="search" name="q" placeholder="লেখার শিরোনাম দিয়ে খুঁজুন" autocomplete="off" />
+      <div class="results" data-search-results hidden></div>
+    </form>
+
+    <div class="sort">
+      <Icon name="sort" size={18} />
+      <label for="post-sort">সাজান:</label>
+      <select id="post-sort" data-sort>
+        <option value={base} selected={sort === "new"}>নতুন আগে</option>
+        <option value={`${base}oldest/`} selected={sort === "old"}>পুরোনো আগে</option>
+      </select>
+      <Icon name="chevron-down" size={18} class="chevron" />
+    </div>
+  </div>
+</div>
+
+<div class="post-grid">
+  {posts.map((post, i) => <PostCard post={post} headingLevel={2} eager={i < 3} />)}
+</div>
+
+<Pagination current={current} total={total} base={sortBase} />
+
+<script>
+  // Sort: each order is its own static page, so the select just navigates.
+  document.querySelector<HTMLSelectElement>("[data-sort]")?.addEventListener("change", (e) => {
+    window.location.href = (e.target as HTMLSelectElement).value;
+  });
+
+  // Search: Pagefind index built after `astro build`; loaded on first use only.
+  const form = document.querySelector<HTMLFormElement>("[data-search]");
+  const input = form?.querySelector<HTMLInputElement>("input");
+  const box = form?.querySelector<HTMLElement>("[data-search-results]");
+
+  type PagefindResult = { data: () => Promise<{ url: string; meta: { title?: string }; excerpt: string }> };
+  type Pagefind = { debouncedSearch: (q: string) => Promise<{ results: PagefindResult[] } | null> };
+  let pagefind: Promise<Pagefind> | undefined;
+
+  const escape = (s: string) => s.replace(/[&<>"]/g, (c) => `&#${c.charCodeAt(0)};`);
+
+  async function run(query: string) {
+    if (!box) return;
+    if (!query.trim()) {
+      box.hidden = true;
+      return;
+    }
+    try {
+      const indexUrl = "/pagefind/pagefind.js"; // generated after build; not a module Vite can see
+      pagefind ??= import(/* @vite-ignore */ indexUrl) as Promise<Pagefind>;
+      const search = await (await pagefind).debouncedSearch(query);
+      if (!search) return; // superseded by a newer keystroke
+      const items = await Promise.all(search.results.slice(0, 6).map((r) => r.data()));
+      box.innerHTML = items.length
+        ? `<ul>${items
+            .map((d) => `<li><a href="${escape(d.url)}"><strong>${escape(d.meta.title ?? d.url)}</strong><span>${d.excerpt}</span></a></li>`)
+            .join("")}</ul>`
+        : `<p>কোনো লেখা পাওয়া যায়নি।</p>`;
+    } catch {
+      box.innerHTML = `<p>খোঁজার সুবিধা শুধু প্রকাশিত সাইটে কাজ করে।</p>`;
+    }
+    box.hidden = false;
+  }
+
+  input?.addEventListener("input", () => run(input.value));
+  form?.addEventListener("submit", (e) => {
+    e.preventDefault();
+    if (input) run(input.value);
+  });
+  document.addEventListener("click", (e) => {
+    if (box && form && !form.contains(e.target as Node)) box.hidden = true;
+  });
+</script>
+
+<style>
+  .toolbar {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: space-between;
+    gap: var(--space-4);
+    margin-bottom: var(--space-7);
+    padding-bottom: var(--space-6);
+    border-bottom: 1px solid var(--color-line);
+  }
+
+  .tabs {
+    display: flex;
+    gap: var(--space-1);
+    max-width: 100%;
+    overflow-x: auto;
+    padding: 0.375rem;
+    border-radius: var(--radius-md);
+    background: var(--color-paper-deep);
+  }
+
+  .tab {
+    display: inline-flex;
+    align-items: center;
+    gap: var(--space-2);
+    padding: 0.5rem 1.125rem;
+    border-radius: var(--radius-sm);
+    color: var(--color-ink-700);
+    font-size: var(--text-ui);
+    font-weight: 500;
+    line-height: 1.5;
+    text-decoration: none;
+    white-space: nowrap;
+  }
+
+  .tab:hover {
+    color: var(--color-ink-900);
+  }
+
+  .tab.active {
+    background: var(--color-surface);
+    box-shadow: 0 1px 3px rgb(13 17 28 / 0.1);
+    color: var(--color-ink-900);
+    font-weight: 600;
+  }
+
+  .tools {
+    display: flex;
+    flex: 1 1 32rem;
+    justify-content: flex-end;
+    gap: var(--space-3);
+  }
+
+  .search,
+  .sort {
+    position: relative;
+    display: flex;
+    align-items: center;
+    gap: 0.625rem;
+    height: 3.25rem;
+    padding-inline: var(--space-4);
+    border: 1.5px solid var(--color-line-strong);
+    border-radius: var(--radius);
+    background: var(--color-surface);
+    color: var(--color-ink-500);
+  }
+
+  .search {
+    flex: 0 1 21rem;
+  }
+
+  .search:focus-within,
+  .sort:focus-within {
+    border-color: var(--color-accent-700);
+  }
+
+  .search input,
+  .sort select {
+    min-width: 0;
+    height: 100%;
+    border: 0;
+    background: transparent;
+    font-size: var(--text-small);
+    outline: none;
+  }
+
+  .search input {
+    flex: 1;
+    color: var(--color-ink-900);
+  }
+
+  .search input::placeholder {
+    color: var(--color-ink-500);
+  }
+
+  .sort label {
+    color: var(--color-ink-700);
+    font-size: var(--text-small);
+    font-weight: 500;
+    white-space: nowrap;
+  }
+
+  .sort select {
+    appearance: none;
+    padding-right: 1.5rem;
+    color: var(--color-ink-900);
+    font-weight: 600;
+    cursor: pointer;
+  }
+
+  .sort :global(.chevron) {
+    position: absolute;
+    right: var(--space-4);
+    pointer-events: none;
+  }
+
+  .results {
+    position: absolute;
+    top: calc(100% + 0.5rem);
+    right: 0;
+    left: 0;
+    z-index: 20;
+    min-width: min(26rem, 90vw);
+    max-height: 26rem;
+    overflow: auto;
+    padding: var(--space-2);
+    border: 1px solid var(--color-line);
+    border-radius: var(--radius);
+    background: var(--color-surface);
+    box-shadow: var(--shadow-card-hover);
+    color: var(--color-ink-700);
+  }
+
+  .results :global(ul) {
+    margin: 0;
+    padding: 0;
+    list-style: none;
+  }
+
+  .results :global(a) {
+    display: grid;
+    gap: 0.125rem;
+    padding: var(--space-3);
+    border-radius: var(--radius-sm);
+    text-decoration: none;
+  }
+
+  .results :global(a:hover),
+  .results :global(a:focus-visible) {
+    background: var(--color-paper-deep);
+  }
+
+  .results :global(strong) {
+    color: var(--color-ink-900);
+    font-weight: 600;
+    line-height: 1.5;
+  }
+
+  .results :global(span) {
+    font-size: var(--text-meta);
+    line-height: 1.6;
+  }
+
+  .results :global(mark) {
+    background: var(--color-accent-50);
+    color: inherit;
+  }
+
+  .results :global(p) {
+    padding: var(--space-3);
+    font-size: var(--text-meta);
+  }
+
+  @media (max-width: 40rem) {
+    .tools {
+      flex-direction: column;
+    }
+
+    .search {
+      flex-basis: auto;
+    }
+  }
+</style>

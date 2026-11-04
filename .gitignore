@@ -1,0 +1,25 @@
+# build output
+dist/
+.astro/
+public/pagefind/
+public/images/thumbs/
+
+# dependencies
+node_modules/
+
+# Netlify
+.netlify/
+
+# env — never commit keys
+.env*
+!.env.example
+
+# Hugo leftovers
+public/hugo/
+.hugo_build.lock
+resources/
+
+# OS / editor
+.DS_Store
+Thumbs.db
+.vscode/

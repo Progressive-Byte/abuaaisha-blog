@@ -1,0 +1,94 @@
+---
+// Hero artwork from Figma: an arch-cut photo inside two gold outlines with a star at the apex.
+// The arch shape is baked into the photo's transparency; positions mirror the Figma frame (507.84 × 636.64).
+interface Props {
+  src: string;
+  alt: string;
+}
+
+const { src, alt } = Astro.props;
+---
+
+<div class="arch">
+  <svg class="outline" viewBox="0 0 507.38 636.244" preserveAspectRatio="none" aria-hidden="true">
+    <path
+      d="M0.69 635.554V267.37C0.69 120.731 152.49 45.1896 253.69 0.753586C354.89 45.1896 506.69 120.731 506.69 267.37V635.554H0.69Z"
+      vector-effect="non-scaling-stroke"></path>
+  </svg>
+  <svg class="outline outline--inner" viewBox="0 0 483 611.843" preserveAspectRatio="none" aria-hidden="true">
+    <path
+      d="M0.46 611.383V257.073C0.46 115.96 145.084 43.2648 241.5 0.503212C337.916 43.2648 482.54 115.96 482.54 257.073V611.383H0.46Z"
+      vector-effect="non-scaling-stroke"></path>
+  </svg>
+  <div class="photo">
+    <img src={src} alt={alt} width="552" height="681" fetchpriority="high" decoding="async" />
+  </div>
+  <svg class="apex" viewBox="0 0 20.24 20.24" aria-hidden="true">
+    <path
+      d="M10.12 1.17645L12.7385 3.795H16.445V7.50145L19.0635 10.12L16.445 12.7385V16.445H12.7385L10.12 19.0635L7.50145 16.445H3.795V12.7385L1.17645 10.12L3.795 7.50145V3.795H7.50145L10.12 1.17645Z"
+    ></path>
+  </svg>
+</div>
+
+<style>
+  .arch {
+    position: relative;
+    width: min(100%, 31.75rem);
+    aspect-ratio: 507.84 / 636.64;
+    margin-top: 1.75rem;
+  }
+
+  .outline {
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: 99.64%;
+    height: 99.71%;
+    overflow: visible;
+  }
+
+  .outline path {
+    fill: none;
+    stroke: var(--color-gold-400);
+    stroke-width: 1.4;
+    stroke-opacity: 0.75;
+  }
+
+  .outline--inner {
+    left: 2.355%;
+    top: 1.879%;
+    width: 94.93%;
+    height: 95.95%;
+  }
+
+  .outline--inner path {
+    stroke-width: 1;
+    stroke-opacity: 0.35;
+  }
+
+  .photo {
+    position: absolute;
+    left: 4.71%;
+    top: 3.757%;
+    width: 90.58%;
+    height: 92.49%;
+  }
+
+  .photo img {
+    position: absolute;
+    left: -10%;
+    top: -3.13%;
+    width: 120%;
+    height: 115.63%;
+    max-width: none;
+  }
+
+  .apex {
+    position: absolute;
+    left: 48.01%;
+    top: -4.335%;
+    width: 3.986%;
+    height: auto;
+    fill: var(--color-gold-500);
+  }
+</style>

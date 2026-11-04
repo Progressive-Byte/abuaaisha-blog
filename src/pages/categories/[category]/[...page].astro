@@ -1,0 +1,33 @@
+---
+import BlogIndex from "../../../components/BlogIndex.astro";
+import PageIntro from "../../../components/PageIntro.astro";
+import BaseLayout from "../../../layouts/BaseLayout.astro";
+import { listingPaths, type ListingProps } from "../../../lib/listing";
+import { CATEGORIES, type Category } from "../../../lib/post-schema";
+import { getPublishedPosts, inCategory } from "../../../lib/posts";
+import { CATEGORY_META } from "../../../lib/site";
+import { toBanglaDigits } from "../../../lib/format";
+
+export async function getStaticPaths() {
+  const posts = await getPublishedPosts();
+  return CATEGORIES.flatMap((category) => listingPaths(inCategory(posts, category), { category }));
+}
+
+const category = Astro.params.category as Category;
+const props = Astro.props as ListingProps;
+const meta = CATEGORY_META[category];
+const suffix = props.current > 1 ? ` — পাতা ${toBanglaDigits(props.current)}` : "";
+---
+
+<BaseLayout title={`${meta.label}${suffix}`} description={`${meta.label}: ${meta.blurb}`}>
+  <div class="container listing">
+    <PageIntro title={meta.label} lede={meta.blurb} />
+    <BlogIndex {...props} category={category} />
+  </div>
+</BaseLayout>
+
+<style>
+  .listing {
+    padding-bottom: var(--space-9);
+  }
+</style>
