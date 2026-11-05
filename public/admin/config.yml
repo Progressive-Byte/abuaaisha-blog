@@ -10,6 +10,12 @@ backend:
 # Saves become cms/* branches + pull requests; "Publish" merges into main.
 publish_mode: editorial_workflow
 
+# One editor pane, no side-by-side preview: the preview only repeated the field
+# labels and made the form feel denser than it is.
+editor:
+  preview: false
+  second_pane: false
+
 site_url: https://abuaaisha.com
 display_url: https://abuaaisha.com
 logo_url: /favicon.svg
@@ -55,12 +61,14 @@ collections:
         field: aiGenerated
         pattern: true
     fields:
+      # Rendered by /admin/ai-panel.js. Never saved: the preSave hook strips it,
+      # and the generated post is committed by the Netlify function instead.
+      - { name: aiDraft, label: "AI সহায়ক", widget: ai-start, required: false }
       - { name: title, label: শিরোনাম, widget: string }
-      - name: date
-        label: প্রকাশের তারিখ
-        widget: datetime
-        format: YYYY-MM-DD
-        time_format: false
+      - name: summary
+        label: সংক্ষিপ্ত সারাংশ
+        widget: text
+        hint: "হোম ও ব্লগ কার্ডে দেখানো এক-দুই বাক্য"
       - name: categories
         label: বিভাগ
         widget: select
@@ -70,21 +78,18 @@ collections:
           - { label: ঈমান (faith), value: faith }
           - { label: সমাজ (social), value: social }
           - { label: বিশ্বদৃষ্টি (worldview), value: worldview }
-      - { name: summary, label: "সংক্ষিপ্ত সারাংশ (কার্ডে দেখাবে)", widget: text }
-      - { name: description, label: "দীর্ঘ সারাংশ (SEO)", widget: text, required: false }
+      - name: date
+        label: প্রকাশের তারিখ
+        widget: datetime
+        format: YYYY-MM-DD
+        time_format: false
+      - { name: body, label: লেখা, widget: markdown }
       - { name: image, label: কভার ছবি, widget: image, required: false }
       - name: imageAlt
         label: "ছবির বর্ণনা (alt) — ছবি থাকলে আবশ্যক"
         widget: string
         required: false
-      - name: draft
-        label: "খসড়া (চালু থাকলে সাইটে প্রকাশ হবে না)"
-        widget: boolean
-        default: true
-      - name: aiGenerated
-        label: AI দিয়ে প্রথম খসড়া তৈরি
-        widget: boolean
-        required: false
+      - { name: description, label: "দীর্ঘ সারাংশ (SEO)", widget: text, required: false }
       - name: sources
         label: "তথ্যসূত্র — প্রতিটি লিংক খুলে যাচাই করুন"
         widget: list
@@ -92,6 +97,11 @@ collections:
         fields:
           - { name: title, label: শিরোনাম, widget: string }
           - { name: url, label: লিংক, widget: string }
+      - name: draft
+        label: "খসড়া (চালু থাকলে সাইটে প্রকাশ হবে না)"
+        widget: boolean
+        default: true
+        hint: "প্রকাশ করতে চাইলে এটি বন্ধ করুন"
       - name: lang
         label: ভাষা
         widget: select
@@ -99,7 +109,11 @@ collections:
         options:
           - { label: বাংলা, value: bn }
           - { label: English, value: en }
-      - { name: body, label: লেখা, widget: markdown }
+      - name: aiGenerated
+        label: "AI দিয়ে তৈরি"
+        widget: boolean
+        required: false
+        hint: "AI খসড়া তৈরি করলে স্বয়ংক্রিয়ভাবে সেট হয়; সাধারণত হাত দিতে হবে না"
 
   - name: pages
     label: পাতা

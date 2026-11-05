@@ -110,19 +110,32 @@ export async function generateDraft(input: DraftInput): Promise<AgentDraft> {
   let image: AgentDraft["image"] = null;
   const imagePrompt = typeof parsed.imagePrompt === "string" ? parsed.imagePrompt : "";
   if (imagePrompt) {
-    const pic = await ai.models.generateContent({
-      model: IMAGE_MODEL(),
-      contents: `${imagePrompt}\nPhotorealistic, warm natural light, 3:2 landscape, no text or watermark.`,
-      config: { responseModalities: ["IMAGE"], imageConfig: { aspectRatio: "3:2" } },
-    });
-    usage.push({
-      model: IMAGE_MODEL(),
-      inputTokens: pic.usageMetadata?.promptTokenCount ?? 0,
-      outputTokens: pic.usageMetadata?.candidatesTokenCount ?? 0,
-    });
-    const part = pic.candidates?.[0]?.content?.parts?.find((p) => p.inlineData?.data);
-    if (part?.inlineData?.data) {
-      image = { data: Buffer.from(part.inlineData.data, "base64"), mimeType: part.inlineData.mimeType ?? "image/png" };
+    try {
+      const pic = await ai.models.generateContent({
+        model: IMAGE_MODEL(),
+        contents: `${imagePrompt}\nPhotorealistic, warm natural light, 3:2 landscape, no text or watermark.`,
+        config: { responseModalities: ["TEXT", "IMAGE"], imageConfig: { aspectRatio: "3:2" } },
+      });
+      usage.push({
+        model: IMAGE_MODEL(),
+        inputTokens: pic.usageMetadata?.promptTokenCount ?? 0,
+        outputTokens: pic.usageMetadata?.candidatesTokenCount ?? 0,
+      });
+      const part = pic.candidates?.[0]?.content?.parts?.find((p) => p.inlineData?.data);
+      if (part?.inlineData?.data) {
+        image = { data: Buffer.from(part.inlineData.data, "base64"), mimeType: part.inlineData.mimeType ?? "image/png" };
+      }
+    } catch (err) {
+      // The cover is best-effort. A model/quota failure must not throw away a
+      // finished article: the draft is committed without an image and the site
+      // falls back to its branded placeholder.
+      console.warn(
+        JSON.stringify({
+          event: "ai-image-failed",
+          model: IMAGE_MODEL(),
+          error: err instanceof Error ? err.message : String(err),
+        }),
+      );
     }
   }
 

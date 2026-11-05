@@ -58,6 +58,17 @@
   to = "/about/"
   status = 301
 
+# The AI drafting page moved into the Sveltia CMS editor (/admin).
+[[redirects]]
+  from = "/admin/ai"
+  to = "/admin/"
+  status = 302
+
+[[redirects]]
+  from = "/admin/ai/"
+  to = "/admin/"
+  status = 302
+
 # ---------------------------------------------------------------------------
 # Security headers
 # ---------------------------------------------------------------------------
@@ -68,9 +79,10 @@
     Referrer-Policy = "strict-origin-when-cross-origin"
     X-Frame-Options = "DENY"
     Permissions-Policy = "camera=(), microphone=(), geolocation=()"
-    # Sveltia CMS (/admin) loads from unpkg and talks to GitHub and Netlify's OAuth;
-    # one policy covers both the site and the admin so the two never conflict.
-    Content-Security-Policy = "default-src 'self'; script-src 'self' 'unsafe-inline' 'wasm-unsafe-eval' https://unpkg.com; style-src 'self' 'unsafe-inline'; img-src 'self' data: blob: https:; font-src 'self' data:; connect-src 'self' https://api.github.com https://*.githubusercontent.com https://api.netlify.com https://unpkg.com; frame-src 'self' https://www.youtube-nocookie.com; worker-src 'self' blob:; form-action 'self'; base-uri 'self'; frame-ancestors 'none'; object-src 'none'"
+    # Sveltia CMS (/admin) loads from unpkg, talks to GitHub and Netlify's OAuth,
+    # and fetches its icon font from cdn.jsdelivr.net; one policy covers both the
+    # site and the admin so the two never conflict.
+    Content-Security-Policy = "default-src 'self'; script-src 'self' 'unsafe-inline' 'wasm-unsafe-eval' https://unpkg.com; style-src 'self' 'unsafe-inline'; img-src 'self' data: blob: https:; font-src 'self' data: https://cdn.jsdelivr.net; connect-src 'self' https://api.github.com https://*.githubusercontent.com https://api.netlify.com https://unpkg.com; frame-src 'self' https://www.youtube-nocookie.com; worker-src 'self' blob:; form-action 'self'; base-uri 'self'; frame-ancestors 'none'; object-src 'none'"
 
 [[headers]]
   for = "/admin/*"

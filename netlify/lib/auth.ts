@@ -22,7 +22,10 @@ export async function requireEditor(req: Request): Promise<string> {
 
   const { login } = (await res.json()) as { login: string };
   if (!env.allowedEditors.includes(login.toLowerCase())) {
-    throw new HttpError(403, `${login} is not allowed to generate drafts`);
+    throw new HttpError(
+      403,
+      `${login} ALLOWED_EDITORS তালিকায় নেই। Netlify → Environment variables-এ এই GitHub username যোগ করুন।`,
+    );
   }
   return login;
 }

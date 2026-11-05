@@ -26,8 +26,7 @@ version.
 | `src/lib/post-schema.ts` | Post front matter schema — used by the build **and** the AI function |
 | `src/styles/global.css` | Design tokens (from the Figma "Midnight Blue" page) |
 | `src/components/`, `src/pages/` | Design and routes |
-| `public/admin/` | Sveltia CMS (`/admin`) and its `config.yml` |
-| `src/pages/admin/ai.astro` | AI drafting page (`/admin/ai`) |
+| `public/admin/` | Sveltia CMS (`/admin`), `config.yml`, `admin.css`, `ai-panel.js` |
 | `netlify/functions/` | `ai-generate`, `ai-generate-background`, `ai-status` |
 | `netlify/lib/agent.ts` | The only file that knows the AI provider (Gemini) |
 | `public/images/posts/` | Post images (WebP, ≤1600px); thumbs are generated at build |
@@ -38,6 +37,10 @@ version.
 
 ## AI drafts
 
-`/admin/ai` → `ai-generate` (checks the editor, daily limit, reserves the slug with `ai-jobs/<slug>.pending.json`) → `ai-generate-background` (Gemini → schema check → WebP → one commit with `draft: true, aiGenerated: true`) → the page polls `ai-status` and links to the draft in Sveltia. A person reads it, checks every source, then sets `draft: false`.
+`/admin` → open a post (or **Add new post**) → the **AI সহায়ক** panel at the top of the editor. It calls `ai-generate` (checks the editor, daily limit, reserves the slug with `ai-jobs/<slug>.pending.json`) → `ai-generate-background` (Gemini → schema check → WebP → one commit with `draft: true, aiGenerated: true`) → the panel polls `ai-status` and opens the new draft. A person reads it, checks every source, then sets `draft: false`.
+
+The panel is a Sveltia custom field type (`public/admin/ai-panel.js`); a `preSave` hook strips its `aiDraft` value so it never reaches the front matter. `/admin/ai` redirects to `/admin/`.
+
+Setup on Netlify (Site configuration → Environment variables): `AI_AGENT_KEY`, `GITHUB_BOT_TOKEN` (this repo, Contents read/write) and `ALLOWED_EDITORS` (comma-separated GitHub logins). The repository owner from `GITHUB_REPO` is always allowed. Redeploy after changing any variable. The cover image is best-effort: if the image model fails (for example, no quota), the article is still saved without a cover. If text generation fails with 429, the AI key has no quota left — enable billing or use another key/model.
 
 Environment variables are listed in `.env.example`.

@@ -11,9 +11,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/).
 
 ## [Unreleased]
 ### Added
-- Placeholder for upcoming features/pages.
+- AI drafting panel inside the Sveltia CMS post editor (custom `ai-start` field type).
 ### Changed
-- Placeholder for code or config refactors.
+- Admin is one page again: `/admin` only. The separate `/admin/ai` page was removed and redirects to `/admin/`.
+- Admin UI themed to the site (Hind Siliguri, Midnight Blue accent, dark mode) with a redesigned AI panel.
 ### Fixed
 - Placeholder for bug/security fixes.
 ### Removed

@@ -6,9 +6,19 @@
     <meta name="robots" content="noindex, nofollow" />
     <title>অ্যাডমিন | Abu Aaisha</title>
     <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
+    <link rel="stylesheet" href="/admin/admin.css" />
   </head>
   <body>
+    <!-- One admin app: Sveltia CMS with the AI drafting panel built into the post editor.
+         Manual init lets ai-panel.js register its field type before the config is validated. -->
+    <script>
+      window.CMS_MANUAL_INIT = true;
+    </script>
     <!-- Sveltia CMS, pinned. Update deliberately: change the version and test on a deploy preview. -->
     <script src="https://unpkg.com/@sveltia/cms@0.253.1/dist/sveltia-cms.js"></script>
+    <script src="/admin/ai-panel.js"></script>
+    <script>
+      window.CMS.init();
+    </script>
   </body>
 </html>
