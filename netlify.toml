@@ -6,8 +6,9 @@
 
 [build.environment]
   NODE_VERSION = "24"
-  # ALLOWED_EDITORS holds public GitHub usernames, not a secret.
-  SECRETS_SCAN_OMIT_KEYS = "ALLOWED_EDITORS"
+  # These are public configuration values, not secrets: the repo name appears in
+  # the CMS config, and ALLOWED_EDITORS holds public GitHub usernames.
+  SECRETS_SCAN_OMIT_KEYS = "ALLOWED_EDITORS,GITHUB_REPO"
 
 [functions]
   directory = "netlify/functions"
