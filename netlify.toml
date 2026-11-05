@@ -6,6 +6,8 @@
 
 [build.environment]
   NODE_VERSION = "24"
+  # ALLOWED_EDITORS holds public GitHub usernames, not a secret.
+  SECRETS_SCAN_OMIT_KEYS = "ALLOWED_EDITORS"
 
 [functions]
   directory = "netlify/functions"
