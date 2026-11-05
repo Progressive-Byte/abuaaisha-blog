@@ -409,9 +409,13 @@ body {
   display: none !important;
 }
 
-/* Fixed cover for posts that don't have an image. */
-.sui .grid-cell.image:not(:has(img)) {
-  background: #0a1730 url("/images/posts/placeholder.svg") center / cover no-repeat;
+/* Fixed cover for posts without an image, rendered as a real image. */
+.sui .grid-cell.image img.bm-placeholder {
+  display: block;
+  width: 56px;
+  height: 56px;
+  object-fit: cover;
+  border-radius: 8px;
 }
 
 .sui .grid-cell.image:not(:has(img)) .preview {
@@ -1295,14 +1299,11 @@ dialog.bm-preview::backdrop {
   }
 
   /* Fixed cover for posts without an image. */
-  .sui .list-view .grid-cell.image:not(:has(img)) {
-    display: block !important;
-    flex: none;
-    width: 56px !important;
-    height: 56px !important;
-    border: 1px solid var(--bm-line);
+  .sui .list-view .grid-cell.image img.bm-placeholder {
+    width: 56px;
+    height: 56px;
+    object-fit: cover;
     border-radius: 10px;
-    background: #0a1730 url("/images/posts/placeholder.svg") center / cover no-repeat;
   }
 
   .sui .list-view .grid-cell.image {
