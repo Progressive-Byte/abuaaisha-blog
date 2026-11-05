@@ -3,7 +3,7 @@
 
 backend:
   name: github
-  repo: MujahidEmon/blog-pgb
+  repo: Progressive-Byte/abuaaisha-blog
   branch: main
   # Login uses Netlify's GitHub OAuth provider (no base_url = Netlify default).
 
@@ -48,8 +48,22 @@ collections:
       editable: [create]
       hint: "ফাইলের নাম = URL। নিয়ম: ৩ অঙ্কের ক্রম + বিভাগ অক্ষর (f/s/w) + বিভাগের ক্রম, যেমন 033s22"
       pattern: ['^\d{3}[fsw]\d{2}$', "যেমন 033s22 — ৩টি অঙ্ক, f/s/w, তারপর ২টি অঙ্ক"]
-    summary: "{{title}} — {{date}}"
-    sortable_fields: [date, title]
+    summary: "{{title}}"
+    thumbnail: image
+    sortable_fields:
+      - { field: date, default_sort: desc }
+      - title
+      - categories
+      - draft
+    # Same idea as the store-admin product table: one row per post with the
+    # cover + title, category, date and publish state.
+    table_columns:
+      - _summary
+      - categories
+      - date
+      - { field: "{{draft | ternary('খসড়া', 'প্রকাশিত')}}", label: স্ট্যাটাস }
+      # Hidden column; /admin/post-actions.js reads it to build the row actions.
+      - { field: slug, label: "__bm_slug" }
     view_filters:
       - label: খসড়া
         field: draft

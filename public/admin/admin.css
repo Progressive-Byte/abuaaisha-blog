@@ -1,8 +1,9 @@
 /* /admin — theme for the single-page Sveltia CMS.
- * Sveltia injects its own CSS at runtime, so theme values are marked !important
- * to win the cascade. Everything else is scoped to our own "ai-start" classes. */
+ * Matches the site: navy sidebar, cool light canvas, navy/gold accents and the
+ * same Hind Siliguri typography as the public pages. Sveltia injects its own CSS
+ * at runtime, so theme tokens are marked !important. */
 
-/* ---------- Hind Siliguri (same font as the site) ---------- */
+/* ---------- Fonts ---------- */
 
 @font-face {
   font-family: "Hind Siliguri";
@@ -10,8 +11,9 @@
   font-weight: 400;
   font-display: swap;
   src: url("/fonts/hind-siliguri-bengali-400.woff2") format("woff2");
-  unicode-range: U+0951-0952, U+0964-0965, U+0980-09FE, U+1CD0, U+1CD2, U+1CD5-1CD6, U+1CD8, U+1CE1,
-    U+1CEA, U+1CED, U+1CF2, U+1CF5-1CF7, U+200C-200D, U+20B9, U+25CC, U+A8F1;
+  unicode-range:
+    U+0951-0952, U+0964-0965, U+0980-09FE, U+1CD0, U+1CD2, U+1CD5-1CD6, U+1CD8, U+1CE1, U+1CEA, U+1CED, U+1CF2,
+    U+1CF5-1CF7, U+200C-200D, U+20B9, U+25CC, U+A8F1;
 }
 
 @font-face {
@@ -20,8 +22,9 @@
   font-weight: 500;
   font-display: swap;
   src: url("/fonts/hind-siliguri-bengali-500.woff2") format("woff2");
-  unicode-range: U+0951-0952, U+0964-0965, U+0980-09FE, U+1CD0, U+1CD2, U+1CD5-1CD6, U+1CD8, U+1CE1,
-    U+1CEA, U+1CED, U+1CF2, U+1CF5-1CF7, U+200C-200D, U+20B9, U+25CC, U+A8F1;
+  unicode-range:
+    U+0951-0952, U+0964-0965, U+0980-09FE, U+1CD0, U+1CD2, U+1CD5-1CD6, U+1CD8, U+1CE1, U+1CEA, U+1CED, U+1CF2,
+    U+1CF5-1CF7, U+200C-200D, U+20B9, U+25CC, U+A8F1;
 }
 
 @font-face {
@@ -30,8 +33,9 @@
   font-weight: 600;
   font-display: swap;
   src: url("/fonts/hind-siliguri-bengali-600.woff2") format("woff2");
-  unicode-range: U+0951-0952, U+0964-0965, U+0980-09FE, U+1CD0, U+1CD2, U+1CD5-1CD6, U+1CD8, U+1CE1,
-    U+1CEA, U+1CED, U+1CF2, U+1CF5-1CF7, U+200C-200D, U+20B9, U+25CC, U+A8F1;
+  unicode-range:
+    U+0951-0952, U+0964-0965, U+0980-09FE, U+1CD0, U+1CD2, U+1CD5-1CD6, U+1CD8, U+1CE1, U+1CEA, U+1CED, U+1CF2,
+    U+1CF5-1CF7, U+200C-200D, U+20B9, U+25CC, U+A8F1;
 }
 
 @font-face {
@@ -40,8 +44,9 @@
   font-weight: 700;
   font-display: swap;
   src: url("/fonts/hind-siliguri-bengali-700.woff2") format("woff2");
-  unicode-range: U+0951-0952, U+0964-0965, U+0980-09FE, U+1CD0, U+1CD2, U+1CD5-1CD6, U+1CD8, U+1CE1,
-    U+1CEA, U+1CED, U+1CF2, U+1CF5-1CF7, U+200C-200D, U+20B9, U+25CC, U+A8F1;
+  unicode-range:
+    U+0951-0952, U+0964-0965, U+0980-09FE, U+1CD0, U+1CD2, U+1CD5-1CD6, U+1CD8, U+1CE1, U+1CEA, U+1CED, U+1CF2,
+    U+1CF5-1CF7, U+200C-200D, U+20B9, U+25CC, U+A8F1;
 }
 
 @font-face {
@@ -50,8 +55,9 @@
   font-weight: 400;
   font-display: swap;
   src: url("/fonts/hind-siliguri-latin-400.woff2") format("woff2");
-  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304,
-    U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
+  unicode-range:
+    U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC,
+    U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
 }
 
 @font-face {
@@ -60,8 +66,9 @@
   font-weight: 500;
   font-display: swap;
   src: url("/fonts/hind-siliguri-latin-500.woff2") format("woff2");
-  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304,
-    U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
+  unicode-range:
+    U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC,
+    U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
 }
 
 @font-face {
@@ -70,8 +77,9 @@
   font-weight: 600;
   font-display: swap;
   src: url("/fonts/hind-siliguri-latin-600.woff2") format("woff2");
-  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304,
-    U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
+  unicode-range:
+    U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC,
+    U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
 }
 
 @font-face {
@@ -80,63 +88,369 @@
   font-weight: 700;
   font-display: swap;
   src: url("/fonts/hind-siliguri-latin-700.woff2") format("woff2");
-  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304,
-    U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
+  unicode-range:
+    U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC,
+    U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
 }
 
-/* ---------- Brand theme for the CMS chrome ---------- */
+/* ---------- Theme tokens ---------- */
 
 :root {
-  --sui-font-family-default: "Hind Siliguri", system-ui, -apple-system, "Segoe UI", Roboto,
-    sans-serif !important;
-  --sui-heading-font-family: "Hind Siliguri", system-ui, -apple-system, "Segoe UI", Roboto,
-    sans-serif !important;
-  --sui-control-font-family: "Hind Siliguri", system-ui, -apple-system, "Segoe UI", Roboto,
-    sans-serif !important;
-  --sui-textbox-font-family: "Hind Siliguri", system-ui, -apple-system, "Segoe UI", Roboto,
-    sans-serif !important;
-  --sui-tab-font-family: "Hind Siliguri", system-ui, -apple-system, "Segoe UI", Roboto,
-    sans-serif !important;
+  color-scheme: light !important;
 
-  --sui-base-hue: 219 !important;
-  --sui-primary-accent-color: #1b3a6b !important;
-  --sui-primary-accent-color-dark: #12294f !important;
+  --bm-canvas: #edf1f8;
+  --bm-surface: #ffffff;
+  --bm-soft: #f6f8fc;
+  --bm-ink: #0e1526;
+  --bm-muted: #525c70;
+  --bm-line: #dce3ee;
+  --bm-line-strong: #b3bfd1;
+  --bm-accent: #1b3a6b;
+  --bm-accent-dark: #0a1730;
+  --bm-accent-soft: #e6ecf6;
+  --bm-gold: #b8914a;
+  --bm-sidebar: #0a1730;
+  --bm-sidebar-line: #1b2a45;
+  --bm-sidebar-text: #c5cddb;
+
+  --bm-font-sans: "Hind Siliguri", system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+  --bm-font-serif: var(--bm-font-sans);
+
+  /* Typography */
+  --sui-font-family-default: var(--bm-font-sans) !important;
+  --sui-control-font-family: var(--bm-font-sans) !important;
+  --sui-textbox-font-family: var(--bm-font-sans) !important;
+  --sui-tab-font-family: var(--bm-font-sans) !important;
+  --sui-heading-font-family: var(--bm-font-serif) !important;
+  --sui-heading-font-weight: 600 !important;
+  --sui-h1-font-family: var(--bm-font-serif) !important;
+  --sui-h2-font-family: var(--bm-font-serif) !important;
+  --sui-h3-font-family: var(--bm-font-serif) !important;
+  --sui-h4-font-family: var(--bm-font-sans) !important;
+  --sui-h5-font-family: var(--bm-font-sans) !important;
+  --sui-h6-font-family: var(--bm-font-sans) !important;
+
+  /* Accent */
+  --sui-primary-accent-color: var(--bm-accent) !important;
+  --sui-primary-accent-color-dark: var(--bm-accent-dark) !important;
   --sui-primary-accent-color-light: #2a5299 !important;
-  --sui-primary-accent-color-text: #1b3a6b !important;
+  --sui-primary-accent-color-text: var(--bm-accent) !important;
   --sui-primary-accent-color-inverted: #ffffff !important;
+  --sui-focus-ring-color: rgb(27 58 107 / 0.22) !important;
+
+  /* Cool neutral palette matching the site */
+  --sui-base-hue: 219 !important;
+  --sui-background-color-1-hsl: 0 0% 100% !important;
+  --sui-background-color-2-hsl: 219 44% 95% !important;
+  --sui-background-color-3-hsl: 218 33% 92% !important;
+  --sui-background-color-4-hsl: 218 24% 88% !important;
+  --sui-background-color-5-hsl: 218 18% 80% !important;
+  --sui-foreground-color-1-hsl: 222 46% 10% !important;
+  --sui-foreground-color-2-hsl: 222 27% 22% !important;
+  --sui-foreground-color-3-hsl: 218 16% 38% !important;
+  --sui-foreground-color-4-hsl: 219 12% 48% !important;
+  --sui-foreground-color-5-hsl: 218 12% 60% !important;
+  --sui-border-color-1-hsl: 218 25% 88% !important;
+  --sui-border-color-2-hsl: 218 20% 80% !important;
+  --sui-border-color-3-hsl: 218 16% 72% !important;
+
+  /* Inputs */
+  --sui-textbox-background-color: #ffffff !important;
+  --sui-textbox-background-color-focus: #ffffff !important;
+  --sui-textbox-border-color: #cdd6e5 !important;
+  --sui-textbox-border-radius: 10px !important;
+  --sui-textbox-foreground-color: var(--bm-ink) !important;
+  --sui-textbox-foreground-color-focus: var(--bm-ink) !important;
+  --sui-textbox-placeholder-foreground-color: #7b8698 !important;
+  --sui-textbox-placeholder-opacity: 1 !important;
+
+  /* Buttons */
+  --sui-button-primary-background-color: var(--bm-accent) !important;
+  --sui-button-primary-background-color-active: var(--bm-accent-dark) !important;
+  --sui-button-primary-background-color-focus: var(--bm-accent-dark) !important;
+  --sui-button-primary-foreground-color: #ffffff !important;
+  --sui-button-primary-foreground-color-active: #ffffff !important;
+  --sui-button-primary-foreground-color-focus: #ffffff !important;
+  --sui-button-primary-border-color: transparent !important;
+  --sui-button-primary-font-weight: 600 !important;
+  --sui-button-secondary-background-color: #ffffff !important;
+  --sui-button-secondary-background-color-active: var(--bm-canvas) !important;
+  --sui-button-secondary-background-color-focus: var(--bm-canvas) !important;
+  --sui-button-secondary-foreground-color: var(--bm-ink) !important;
+  --sui-button-secondary-border-color: var(--bm-line) !important;
+  --sui-button-secondary-border-width: 1px !important;
+  --sui-button-link-foreground-color: var(--bm-accent) !important;
+
+  /* Shape */
+  --sui-control-medium-border-radius: 10px !important;
+  --sui-control-large-border-radius: 12px !important;
+  --sui-button-medium-border-radius: 10px !important;
+  --sui-button-large-border-radius: 12px !important;
+  --sui-dialog-content-border-radius: 16px !important;
+  --sui-menu-border-radius: 12px !important;
+  --sui-popup-shadow-color: rgb(14 21 38 / 0.16) !important;
+  --sui-shadow-color: rgb(14 21 38 / 0.08) !important;
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --sui-primary-accent-color: #8fb0e6 !important;
-    --sui-primary-accent-color-dark: #6f93d1 !important;
-    --sui-primary-accent-color-light: #a8c4ef !important;
-    --sui-primary-accent-color-text: #8fb0e6 !important;
-    --sui-primary-accent-color-inverted: #0b1220 !important;
+/* ---------- CMS chrome ---------- */
+
+html,
+body {
+  font-family: var(--bm-font-sans) !important;
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+}
+
+.sui.app-shell {
+  background: var(--bm-canvas) !important;
+  color: var(--bm-ink) !important;
+}
+
+.sui .primary-sidebar {
+  background: var(--bm-sidebar) !important;
+  color: var(--bm-sidebar-text) !important;
+  border-inline-end: 1px solid var(--bm-sidebar-line) !important;
+  scrollbar-color: #3c3530 transparent;
+}
+
+.sui .primary-sidebar :is(a, button, summary, span, p, li, h1, h2, h3, h4, h5, h6) {
+  color: var(--bm-sidebar-text) !important;
+}
+
+.sui .primary-sidebar :is(a, button, summary) {
+  border-radius: 10px !important;
+  transition:
+    background 0.15s,
+    color 0.15s;
+}
+
+.sui .primary-sidebar :is(a, button, summary):hover {
+  background: rgb(255 255 255 / 0.07) !important;
+  color: #ffffff !important;
+}
+
+.sui .primary-sidebar :is(a, button, summary):hover :is(span, p, h1, h2, h3, h4, h5, h6) {
+  color: #ffffff !important;
+}
+
+.sui .primary-sidebar .selected,
+.sui .primary-sidebar [aria-current="page"],
+.sui .primary-sidebar [aria-current="true"] {
+  background: #ffffff !important;
+  color: var(--bm-ink) !important;
+}
+
+.sui .primary-sidebar .selected :is(a, button, span, p, svg),
+.sui .primary-sidebar [aria-current="page"] :is(a, span, p, svg) {
+  color: var(--bm-ink) !important;
+}
+
+.sui .primary-sidebar .selected svg {
+  color: var(--bm-gold) !important;
+}
+
+/* Sveltia's tree marks the current collection with aria-selected, not a class. */
+.sui .primary-sidebar [aria-selected="true"],
+.sui .primary-sidebar [aria-selected="true"] > .row {
+  background: #ffffff !important;
+  color: var(--bm-ink) !important;
+  border-radius: 10px !important;
+}
+
+.sui .primary-sidebar [aria-selected="true"] :is(.label, .count, span, p) {
+  color: var(--bm-ink) !important;
+}
+
+.sui .primary-sidebar [aria-selected="true"] .icon {
+  color: var(--bm-gold) !important;
+}
+
+.sui .primary-sidebar .row:hover {
+  background: rgb(255 255 255 / 0.07) !important;
+  border-radius: 10px !important;
+}
+
+/* Name the top navigation instead of showing bare icons. Scope this to the
+ * global toolbar's button group so it doesn't affect the entry-sidebar rail
+ * (which is only 48px wide) or the table/list/grid view switcher. */
+.sui .toolbar.primary .buttons .select-button.iconic {
+  width: auto !important;
+  gap: 6px !important;
+  padding-inline: 10px !important;
+  border-radius: 10px !important;
+  overflow: visible !important;
+}
+
+.sui .toolbar.primary .buttons .select-button.iconic::after {
+  content: attr(aria-label);
+  font-family: var(--bm-font-sans);
+  font-size: 12.5px;
+  font-weight: 600;
+  line-height: 1;
+  white-space: nowrap;
+}
+
+.sui .toolbar.secondary .select-button.iconic::after,
+.sui .toolbar.horizontal.secondary .select-button.iconic::after {
+  content: none;
+}
+
+@media (max-width: 64rem) {
+  .sui .toolbar.primary .buttons .select-button.iconic::after {
+    content: none;
   }
+}
+
+.sui .bottom-navigation {
+  background: var(--bm-sidebar) !important;
+  border-top: 1px solid var(--bm-sidebar-line) !important;
+}
+
+.sui .bottom-navigation :is(a, button, span, svg) {
+  color: var(--bm-sidebar-text) !important;
+}
+
+.sui .bottom-navigation .selected :is(a, button, span, svg) {
+  color: #ffffff !important;
+}
+
+.sui .secondary-sidebar {
+  background: var(--bm-surface) !important;
+  border-inline-start: 1px solid var(--bm-line) !important;
+}
+
+.sui .content-pane {
+  background: var(--bm-canvas) !important;
+}
+
+.sui .content-editor {
+  background: var(--bm-surface) !important;
+}
+
+/* The editor's form column is 768px by default, which leaves a lot of empty
+ * canvas on wide screens. Give it a comfortable reading width instead. */
+.sui .field-wrapper {
+  max-width: 1000px !important;
+}
+
+/* Match the width of the sticky “Edit” toolbar to the form column. */
+.sui .header .toolbar.secondary {
+  max-width: 1000px !important;
+}
+
+.sui .toolbar {
+  background: var(--bm-surface) !important;
+  border-bottom: 1px solid var(--bm-line) !important;
+}
+
+/* Entry table (Sveltia's table view) */
+.sui .table-col-header {
+  color: var(--bm-muted) !important;
+  font-size: 11px !important;
+  font-weight: 600 !important;
+  letter-spacing: 0.08em !important;
+  text-transform: uppercase !important;
+}
+
+.sui .table-row {
+  background: var(--bm-surface) !important;
+  border-bottom: 1px solid var(--bm-line) !important;
+}
+
+.sui .table-row:hover {
+  background: var(--bm-soft) !important;
+}
+
+.sui .table-cell,
+.sui .table-row-header {
+  padding: 14px 12px !important;
+  color: var(--bm-ink) !important;
+}
+
+.sui .table-row-header {
+  font-weight: 600 !important;
+}
+
+/* Sveltia renders the table view with grid-* classes. */
+.sui :is(.grid-col-header, .table-col-header) {
+  color: var(--bm-muted) !important;
+  font-size: 11px !important;
+  font-weight: 600 !important;
+  letter-spacing: 0.08em !important;
+  text-transform: uppercase !important;
+}
+
+.sui .grid-row[aria-label] {
+  background: var(--bm-surface) !important;
+  border-bottom: 1px solid var(--bm-line) !important;
+}
+
+.sui .grid-row[aria-label]:hover {
+  background: var(--bm-soft) !important;
+}
+
+.sui :is(.grid-cell, .table-cell) {
+  padding: 14px 12px !important;
+  color: var(--bm-ink) !important;
+}
+
+.sui .grid-cell .label,
+.sui .grid-cell .label :is(bdi, span) {
+  color: var(--bm-ink) !important;
+}
+
+.sui .grid-row[aria-label]:hover .grid-cell .label,
+.sui .grid-row[aria-label]:hover .grid-cell .label :is(bdi, span) {
+  color: var(--bm-accent) !important;
+}
+
+/* Hidden slug column used by the row actions. */
+.sui :is(.grid-cell[data-key="slug"], .grid-cell[data-key="__bm_slug"]) {
+  display: none !important;
+}
+
+/* Fixed cover for posts that don't have an image. */
+.sui .grid-cell.image:not(:has(img)) {
+  background: #0a1730 url("/images/posts/placeholder.svg") center / cover no-repeat;
+}
+
+.sui .grid-cell.image:not(:has(img)) .preview {
+  display: none !important;
+}
+
+.sui :is(h1, h2, h3) {
+  letter-spacing: -0.015em;
+}
+
+.sui ::selection {
+  background: var(--bm-accent-soft);
+  color: var(--bm-ink);
 }
 
 /* ---------- AI drafting panel (inside the post editor) ---------- */
 
 .ai-start {
-  --ai-ink: #0e1526;
-  --ai-muted: #525c70;
-  --ai-line: #dbe3ef;
-  --ai-surface: #ffffff;
-  --ai-subtle: #f5f8fc;
-  --ai-primary: #1b3a6b;
-  --ai-primary-dark: #0a1730;
-  --ai-gold: #b8914a;
+  --ai-ink: var(--bm-ink);
+  --ai-muted: var(--bm-muted);
+  --ai-line: var(--bm-line);
+  --ai-surface: var(--bm-surface);
+  --ai-soft: var(--bm-soft);
+  --ai-primary: var(--bm-accent);
+  --ai-primary-dark: var(--bm-accent-dark);
+  --ai-accent-soft: var(--bm-accent-soft);
+  --ai-gold: var(--bm-gold);
+  --ai-gold-soft: #f7f1e6;
   --ai-danger: #b42318;
   --ai-ok-bg: #eaf7ef;
   --ai-ok-line: #bfe3cc;
-  --ai-ok-ink: #166534;
+  --ai-ok-ink: #167a4a;
 
-  margin: 0 0 8px;
+  margin: 0 0 10px;
   border: 1px solid var(--ai-line);
-  border-radius: 16px;
+  border-radius: 18px;
   background: var(--ai-surface);
-  font-family: "Hind Siliguri", system-ui, sans-serif;
+  font-family: var(--bm-font-sans);
+  box-shadow: 0 1px 2px rgb(29 26 23 / 0.04);
   overflow: hidden;
 }
 
@@ -144,19 +458,20 @@
   display: flex;
   align-items: flex-start;
   gap: 14px;
-  padding: 18px 20px;
-  background: linear-gradient(135deg, #0a1730 0%, #1b3a6b 100%);
-  color: #fff;
+  padding: 20px 22px;
+  border-bottom: 1px solid var(--ai-line);
+  background: var(--ai-surface);
+  color: var(--ai-ink);
 }
 
 .ai-start__badge {
   display: grid;
   flex: none;
   place-items: center;
-  width: 42px;
-  height: 42px;
+  width: 44px;
+  height: 44px;
   border-radius: 12px;
-  background: rgb(255 255 255 / 0.1);
+  background: var(--ai-gold-soft);
   color: var(--ai-gold);
 }
 
@@ -167,31 +482,34 @@
 
 .ai-start__intro {
   display: grid;
-  gap: 3px;
+  gap: 4px;
   min-width: 0;
 }
 
 .ai-start__intro strong {
-  font-size: 16px;
+  color: var(--ai-ink);
+  font-family: var(--bm-font-serif);
+  font-size: 20px;
   font-weight: 600;
-  line-height: 1.5;
+  line-height: 1.35;
+  letter-spacing: -0.01em;
 }
 
 .ai-start__intro span {
-  color: #c5cddb;
+  color: var(--ai-muted);
   font-size: 13.5px;
-  line-height: 1.6;
+  line-height: 1.65;
 }
 
 .ai-start__body {
   display: grid;
   gap: 16px;
-  padding: 18px 20px 20px;
+  padding: 20px 22px 22px;
 }
 
 .ai-start__grid {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(min(100%, 15rem), 1fr));
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, 14rem), 1fr));
   gap: 14px;
   align-items: start;
 }
@@ -199,6 +517,7 @@
 .ai-start__field {
   display: grid;
   gap: 6px;
+  min-width: 0;
   margin: 0;
   padding: 0;
   border: 0;
@@ -206,7 +525,7 @@
 
 .ai-start__label {
   color: var(--ai-ink);
-  font-size: 13.5px;
+  font-size: 13px;
   font-weight: 600;
   line-height: 1.5;
 }
@@ -218,9 +537,10 @@
 
 .ai-start__input {
   width: 100%;
+  max-width: 100%;
   min-height: 42px;
   padding: 10px 12px;
-  border: 1.5px solid var(--ai-line);
+  border: 1px solid #cdd6e5;
   border-radius: 10px;
   background: var(--ai-surface);
   color: var(--ai-ink);
@@ -232,8 +552,8 @@
 
 .ai-start__input:focus {
   border-color: var(--ai-primary);
-  outline: 2px solid rgb(27 58 107 / 0.16);
-  outline-offset: 1px;
+  outline: 3px solid rgb(27 58 107 / 0.16);
+  outline-offset: 0;
 }
 
 .ai-start__input:disabled {
@@ -251,8 +571,8 @@
   display: grid;
   justify-items: center;
   gap: 1px;
-  padding: 8px 6px;
-  border: 1.5px solid var(--ai-line);
+  padding: 9px 6px;
+  border: 1px solid var(--ai-line);
   border-radius: 10px;
   background: var(--ai-surface);
   color: var(--ai-muted);
@@ -260,7 +580,10 @@
   font-size: 13px;
   line-height: 1.4;
   text-align: center;
-  transition: border-color 0.15s, background 0.15s, color 0.15s;
+  transition:
+    border-color 0.15s,
+    background 0.15s,
+    color 0.15s;
 }
 
 .ai-start__chip input {
@@ -282,13 +605,13 @@
 
 .ai-start__chip[data-active="true"] {
   border-color: var(--ai-primary);
-  background: #e9eff9;
+  background: var(--ai-accent-soft);
   color: var(--ai-primary);
 }
 
 .ai-start__chip:focus-within {
-  outline: 2px solid rgb(27 58 107 / 0.2);
-  outline-offset: 1px;
+  outline: 3px solid rgb(27 58 107 / 0.18);
+  outline-offset: 0;
 }
 
 .ai-start__actions {
@@ -304,7 +627,7 @@
   gap: 8px;
   min-height: 42px;
   padding: 9px 16px;
-  border: 1.5px solid var(--ai-line);
+  border: 1px solid var(--ai-line);
   border-radius: 10px;
   background: var(--ai-surface);
   color: var(--ai-ink);
@@ -313,7 +636,11 @@
   font-weight: 600;
   line-height: 1.4;
   cursor: pointer;
-  transition: background 0.15s, border-color 0.15s, color 0.15s, opacity 0.15s;
+  transition:
+    background 0.15s,
+    border-color 0.15s,
+    color 0.15s,
+    opacity 0.15s;
 }
 
 .ai-start__button:hover {
@@ -324,12 +651,12 @@
 .ai-start__button--primary {
   border-color: transparent;
   background: var(--ai-primary);
-  color: #fff;
+  color: #ffffff;
 }
 
 .ai-start__button--primary:hover {
   background: var(--ai-primary-dark);
-  color: #fff;
+  color: #ffffff;
 }
 
 .ai-start__button:disabled {
@@ -346,7 +673,7 @@
   flex: 1 1 14rem;
   color: var(--ai-muted);
   font-size: 12.5px;
-  line-height: 1.55;
+  line-height: 1.6;
 }
 
 .ai-start__error {
@@ -411,7 +738,7 @@
   height: 26px;
   border-radius: 999px;
   background: var(--ai-ok-ink);
-  color: #fff;
+  color: #ffffff;
   font-size: 15px;
   font-weight: 700;
 }
@@ -431,14 +758,14 @@
 .ai-start__done code {
   padding: 1px 4px;
   border-radius: 4px;
-  background: rgb(22 101 52 / 0.1);
+  background: rgb(22 122 74 / 0.1);
   font-size: 12px;
 }
 
 .ai-start--collapsed {
   padding: 0;
   border-style: dashed;
-  background: var(--ai-subtle);
+  background: var(--ai-soft);
 }
 
 .ai-start--collapsed > summary {
@@ -458,60 +785,555 @@
   border-radius: 0;
 }
 
-@media (max-width: 30rem) {
+/* ---------- Responsive ---------- */
+
+@media (max-width: 48rem) {
   .ai-start__head {
-    padding: 15px 16px;
+    gap: 12px;
+    padding: 16px;
   }
 
   .ai-start__body {
     padding: 16px;
   }
 
-  .ai-start__chips {
-    grid-template-columns: 1fr;
+  .ai-start__intro strong {
+    font-size: 18px;
+  }
+
+  .sui .secondary-sidebar {
+    border-inline-start: 0 !important;
   }
 }
 
-/* ---------- Dark mode ---------- */
-
-@media (prefers-color-scheme: dark) {
-  .ai-start {
-    --ai-ink: #eef2f9;
-    --ai-muted: #a3aec2;
-    --ai-line: #24314d;
-    --ai-surface: #141e33;
-    --ai-subtle: #101a2c;
-    --ai-primary: #8fb0e6;
-    --ai-primary-dark: #6f93d1;
-    --ai-danger: #f97066;
-    --ai-ok-bg: #11271c;
-    --ai-ok-line: #245c3a;
-    --ai-ok-ink: #7bd99b;
+@media (max-width: 30rem) {
+  .ai-start__chips {
+    grid-template-columns: 1fr;
   }
 
-  .ai-start__chip[data-active="true"] {
-    background: rgb(143 176 230 / 0.14);
-  }
-
-  .ai-start__input:focus {
-    outline-color: rgb(143 176 230 / 0.22);
-  }
-
-  .ai-start__spinner {
-    border-color: rgb(143 176 230 / 0.25);
-    border-top-color: var(--ai-primary);
-  }
-
-  .ai-start__error {
-    border-color: #5a2b28;
-    background: #2a1615;
+  .ai-start__actions {
+    align-items: stretch;
   }
 
   .ai-start__button--primary {
-    background: #2a5299;
+    width: 100%;
+    justify-content: center;
   }
 
-  .ai-start__button--primary:hover {
-    background: #21447f;
+  .ai-start__note {
+    flex-basis: 100%;
+  }
+}
+
+/* ---------- Post row actions ---------- */
+
+.sui .grid-col-header.bm-actions-head {
+  display: table-cell !important;
+  padding: 8px 12px !important;
+  color: var(--bm-muted) !important;
+  font-size: 11px !important;
+  font-weight: 600 !important;
+  letter-spacing: 0.08em !important;
+  text-align: end;
+  text-transform: uppercase !important;
+  vertical-align: middle;
+  white-space: nowrap;
+}
+
+.sui .grid-cell.bm-actions-cell {
+  display: table-cell !important;
+  width: auto;
+  min-width: 210px;
+  text-align: end;
+  vertical-align: middle;
+  white-space: nowrap;
+}
+
+.bm-actions {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: flex-end;
+  gap: 10px;
+}
+
+.bm-act {
+  padding: 0;
+  border: 0;
+  background: none;
+  color: var(--bm-accent);
+  font-family: var(--bm-font-sans);
+  font-size: 12.5px;
+  font-weight: 600;
+  line-height: 1.4;
+  cursor: pointer;
+}
+
+.bm-act:hover {
+  text-decoration: underline;
+}
+
+.bm-act--publish {
+  color: #167a4a;
+}
+
+.bm-act--unpublish {
+  color: #8a6a2f;
+}
+
+.bm-act--delete {
+  color: #b42318;
+}
+
+.bm-act:disabled {
+  opacity: 0.5;
+  cursor: progress;
+}
+
+/* Preview modal */
+dialog.bm-preview {
+  width: min(1100px, calc(100vw - 2rem));
+  height: min(85vh, 900px);
+  padding: 0;
+  border: 0;
+  border-radius: 16px;
+  background: var(--bm-surface);
+  color: var(--bm-ink);
+  box-shadow: 0 30px 60px rgb(6 13 28 / 0.35);
+}
+
+dialog.bm-preview::backdrop {
+  background: rgb(6 13 28 / 0.55);
+}
+
+.bm-preview__box {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+}
+
+.bm-preview__head {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 14px 18px;
+  border-bottom: 1px solid var(--bm-line);
+}
+
+.bm-preview__head strong {
+  flex: 1;
+  min-width: 0;
+  overflow: hidden;
+  color: var(--bm-ink);
+  font-size: 15px;
+  font-weight: 600;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.bm-preview__open {
+  color: var(--bm-accent);
+  font-size: 13px;
+  font-weight: 600;
+  text-decoration: none;
+}
+
+.bm-preview__open:hover {
+  text-decoration: underline;
+}
+
+.bm-preview__close {
+  display: grid;
+  flex: none;
+  place-items: center;
+  width: 32px;
+  height: 32px;
+  border: 1px solid var(--bm-line);
+  border-radius: 999px;
+  background: var(--bm-surface);
+  color: var(--bm-ink);
+  font-size: 18px;
+  line-height: 1;
+  cursor: pointer;
+}
+
+.bm-preview__body {
+  flex: 1;
+  min-height: 0;
+  background: var(--bm-canvas);
+}
+
+.bm-preview__body iframe {
+  width: 100%;
+  height: 100%;
+  border: 0;
+  background: #ffffff;
+}
+
+.bm-preview__note {
+  margin: 0;
+  padding: 28px;
+  color: var(--bm-muted);
+  text-align: center;
+}
+
+@media (max-width: 48rem) {
+  dialog.bm-preview {
+    width: calc(100vw - 1rem);
+    height: calc(100dvh - 1rem);
+  }
+
+  .bm-actions {
+    gap: 8px;
+  }
+}
+
+/* ---------- Mobile shell ---------- */
+
+.bm-hamburger,
+.bm-drawer,
+.bm-drawer-scrim {
+  display: none;
+}
+
+@media (max-width: 48rem) {
+  /* Replace Sveltia's bottom icon bar with a labelled hamburger drawer. */
+  .sui .bottom-navigation {
+    display: none !important;
+  }
+
+  .bm-hamburger {
+    display: inline-flex;
+    flex: none;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 3px;
+    width: 40px;
+    height: 40px;
+    margin-inline-end: 4px;
+    padding: 0 10px;
+    border: 1px solid var(--bm-line);
+    border-radius: 10px;
+    background: var(--bm-surface);
+    cursor: pointer;
+  }
+
+  .bm-hamburger span {
+    display: block;
+    width: 18px;
+    height: 2px;
+    border-radius: 2px;
+    background: var(--bm-ink);
+  }
+
+  .bm-hamburger:hover {
+    border-color: var(--bm-accent);
+  }
+
+  .bm-hamburger:focus-visible {
+    outline: 3px solid rgb(27 58 107 / 0.2);
+    outline-offset: 2px;
+  }
+
+  .bm-drawer-scrim {
+    position: fixed;
+    inset: 0;
+    z-index: 3000;
+    display: block;
+    background: rgb(6 13 28 / 0.55);
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.2s ease;
+  }
+
+  .bm-drawer-open .bm-drawer-scrim {
+    opacity: 1;
+    pointer-events: auto;
+  }
+
+  .bm-drawer {
+    position: fixed;
+    inset-block: 0;
+    inset-inline-start: 0;
+    z-index: 3001;
+    display: flex;
+    flex-direction: column;
+    width: min(300px, 86vw);
+    max-width: 100%;
+    background: var(--bm-sidebar);
+    color: var(--bm-sidebar-text);
+    box-shadow: 0 24px 48px rgb(6 13 28 / 0.35);
+    transform: translateX(-100%);
+    transition: transform 0.22s ease;
+  }
+
+  .bm-drawer-open .bm-drawer {
+    transform: none;
+  }
+}
+
+.bm-drawer__head {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 18px 16px;
+  border-bottom: 1px solid var(--bm-sidebar-line);
+}
+
+.bm-drawer__mark {
+  display: grid;
+  flex: none;
+  place-items: center;
+  width: 40px;
+  height: 40px;
+  border-radius: 12px;
+  background: var(--bm-gold);
+  color: var(--bm-ink);
+  font-size: 19px;
+  font-weight: 700;
+}
+
+.bm-drawer__brand {
+  display: grid;
+  flex: 1;
+  gap: 1px;
+}
+
+.bm-drawer__brand strong {
+  color: #ffffff;
+  font-size: 16px;
+  font-weight: 600;
+}
+
+.bm-drawer__brand small {
+  color: var(--bm-sidebar-text);
+  font-size: 12px;
+}
+
+.bm-drawer__close {
+  display: grid;
+  flex: none;
+  place-items: center;
+  width: 34px;
+  height: 34px;
+  border: 1px solid var(--bm-sidebar-line);
+  border-radius: 999px;
+  background: transparent;
+  color: var(--bm-sidebar-text);
+  font-size: 20px;
+  line-height: 1;
+  cursor: pointer;
+}
+
+.bm-drawer__nav {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  padding: 12px;
+  overflow-y: auto;
+}
+
+.bm-drawer__nav a,
+.bm-drawer__foot a {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 11px 12px;
+  border-radius: 10px;
+  color: var(--bm-sidebar-text);
+  font-size: 14px;
+  font-weight: 600;
+  text-decoration: none !important;
+}
+
+.bm-drawer__nav a:hover,
+.bm-drawer__foot a:hover {
+  background: rgb(255 255 255 / 0.07);
+  color: #ffffff;
+}
+
+.bm-drawer__nav a.active {
+  background: #ffffff;
+  color: var(--bm-ink);
+}
+
+.bm-drawer__nav a.active .bm-drawer__icon {
+  color: var(--bm-gold);
+}
+
+.bm-drawer__icon {
+  width: 20px;
+  height: 20px;
+  flex: none;
+}
+
+.bm-drawer__foot {
+  margin-top: auto;
+  padding: 12px;
+  border-top: 1px solid var(--bm-sidebar-line);
+}
+
+/* Parent/child groups in the hamburger drawer. */
+.bm-drawer__group {
+  display: grid;
+}
+
+.bm-drawer__parent {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  width: 100%;
+  padding: 11px 12px;
+  border: 0;
+  border-radius: 10px;
+  background: none;
+  color: var(--bm-sidebar-text);
+  font-family: inherit;
+  font-size: 14px;
+  font-weight: 600;
+  line-height: 1.4;
+  text-align: start;
+  cursor: pointer;
+}
+
+.bm-drawer__parent:hover {
+  background: rgb(255 255 255 / 0.07);
+  color: #ffffff;
+}
+
+.bm-drawer__parent > span {
+  flex: 1;
+}
+
+.bm-drawer__chevron {
+  flex: none;
+  width: 16px;
+  height: 16px;
+  transition: transform 0.18s ease;
+}
+
+.bm-drawer__group[data-open="true"] .bm-drawer__chevron {
+  transform: rotate(180deg);
+}
+
+.bm-drawer__sub {
+  display: none;
+  padding-inline-start: 12px;
+}
+
+.bm-drawer__group[data-open="true"] .bm-drawer__sub {
+  display: grid;
+  gap: 2px;
+}
+
+.bm-drawer__sub a {
+  padding-inline-start: 42px;
+}
+
+/* ---------- Mobile posts list ---------- */
+
+@media (max-width: 48rem) {
+  /* The list is the landing page: the hamburger replaces the back button. */
+  .bm-list-route .sui .toolbar.primary .back {
+    display: none !important;
+  }
+
+  /* The list view is forced on small screens; the view switcher is noise. */
+  .sui button[aria-label="Table View"],
+  .sui button[aria-label="List View"],
+  .sui button[aria-label="Grid View"],
+  .sui button[aria-label="Switch to Table View"],
+  .sui button[aria-label="Switch to List View"],
+  .sui button[aria-label="Switch to Grid View"],
+  .sui .toolbar.secondary .wrapper:has(button[aria-label*="View"]) {
+    display: none !important;
+  }
+
+  .sui .toolbar.secondary .inner {
+    gap: 4px;
+    padding-inline: 8px;
+  }
+
+  /* Comfortable cards instead of dense rows. */
+  .sui .list-container {
+    padding-bottom: 120px;
+    scrollbar-gutter: stable;
+  }
+
+  .sui .list-view .grid-body {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    padding: 12px 14px 16px;
+    box-sizing: border-box;
+  }
+
+  .sui .list-view .grid-row[aria-label] {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    box-sizing: border-box;
+    width: 100%;
+    max-width: 100%;
+    height: auto !important;
+    min-height: 56px;
+    padding: 12px 14px;
+    border: 1px solid var(--bm-line);
+    border-radius: 14px;
+    background: var(--bm-surface);
+    box-shadow: 0 1px 2px rgb(14 21 38 / 0.04);
+  }
+
+  .sui .list-view .grid-row[aria-label]:hover {
+    border-color: var(--bm-accent);
+    background: var(--bm-surface) !important;
+  }
+
+  .sui .list-view .grid-cell {
+    display: block;
+    padding: 0 !important;
+  }
+
+  /* Fixed cover for posts without an image. */
+  .sui .list-view .grid-cell.image:not(:has(img)) {
+    display: block !important;
+    flex: none;
+    width: 56px !important;
+    height: 56px !important;
+    border: 1px solid var(--bm-line);
+    border-radius: 10px;
+    background: #0a1730 url("/images/posts/placeholder.svg") center / cover no-repeat;
+  }
+
+  .sui .list-view .grid-cell.image {
+    flex: none;
+    width: 56px;
+  }
+
+  .sui .list-view .grid-cell.image .preview {
+    width: 56px;
+    height: 56px;
+    overflow: hidden;
+    border-radius: 10px;
+  }
+
+  .sui .list-view .grid-cell.image img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+
+  .sui .list-view .grid-cell.title {
+    flex: 1;
+    min-width: 0;
+  }
+
+  .sui .list-view .grid-cell.title .label {
+    font-size: 14px;
+    line-height: 1.55;
+  }
+
+  .sui .list-view .grid-cell.status {
+    display: none;
   }
 }

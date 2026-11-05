@@ -13,10 +13,14 @@ and this project adheres to [Semantic Versioning](https://semver.org/).
 ### Added
 - AI drafting panel inside the Sveltia CMS post editor (custom `ai-start` field type).
 ### Changed
+- Repository migrated to `Progressive-Byte/abuaaisha-blog`: CMS backend, row actions, AI defaults and env examples now point at the company repo.
 - Admin is one page again: `/admin` only. The separate `/admin/ai` page was removed and redirects to `/admin/`.
-- Admin UI themed to the site (Hind Siliguri, Midnight Blue accent, dark mode) with a redesigned AI panel.
+- Admin UI themed to the site (Hind Siliguri, Midnight Blue accent) with a redesigned AI panel.
+- Admin is light-only, regardless of the OS colour scheme.
+- Admin UI restyled to the reference store-admin layout using the site palette: navy sidebar, cool light canvas, navy primary actions, gold accents, the site's Hind Siliguri typography, a table-style post list (cover + title, category, date, status), labelled top navigation and per-row actions (preview modal, edit, publish/unpublish, delete).
+- The public site is light-only too; the `prefers-color-scheme: dark` token block was removed.
 ### Fixed
-- Placeholder for bug/security fixes.
+- AI drafting is now always allowed for `rwxlog`, in addition to `ALLOWED_EDITORS` and the repository owner.
 ### Removed
 - Placeholder for removed/unused code or assets.
 ---

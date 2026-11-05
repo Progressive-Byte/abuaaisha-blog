@@ -41,6 +41,6 @@ version.
 
 The panel is a Sveltia custom field type (`public/admin/ai-panel.js`); a `preSave` hook strips its `aiDraft` value so it never reaches the front matter. `/admin/ai` redirects to `/admin/`.
 
-Setup on Netlify (Site configuration → Environment variables): `AI_AGENT_KEY`, `GITHUB_BOT_TOKEN` (this repo, Contents read/write) and `ALLOWED_EDITORS` (comma-separated GitHub logins). The repository owner from `GITHUB_REPO` is always allowed. Redeploy after changing any variable. The cover image is best-effort: if the image model fails (for example, no quota), the article is still saved without a cover. If text generation fails with 429, the AI key has no quota left — enable billing or use another key/model.
+Setup on Netlify (Site configuration → Environment variables): `AI_AGENT_KEY`, `GITHUB_BOT_TOKEN` (this repo, Contents read/write) and `ALLOWED_EDITORS` (comma-separated GitHub logins). The repository owner from `GITHUB_REPO` and `rwxlog` are always allowed. Redeploy after changing any variable. The cover image is best-effort: if the image model fails (for example, no quota), the article is still saved without a cover. If text generation fails with 429, the AI key has no quota left — enable billing or use another key/model.
 
 Environment variables are listed in `.env.example`.

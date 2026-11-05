@@ -76,30 +76,6 @@
   --radius-2xl: 2rem; /* bands 32 */
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    color-scheme: dark;
-    --color-ink-900: #eef2f9;
-    --color-ink-700: #d0d7e4;
-    --color-ink-500: #a3aec2;
-    --color-accent-700: #8fb0e6;
-    --color-accent-50: #1a2a47;
-    --color-gold-500: #d4ad66;
-    --color-paper: #0b1220;
-    --color-paper-deep: #111a2e;
-    --color-surface: #141e33;
-    --color-line: #24314d;
-    --color-line-strong: #3a4a6b;
-    --color-band: #060d1c;
-    --color-btn: #2a5299;
-    --color-btn-hover: #21447f;
-    --color-focus: #8fb0e6;
-    --color-danger: #f97066;
-    --shadow-card: 0 10px 15px rgb(0 0 0 / 0.25);
-    --shadow-card-hover: 0 16px 32px rgb(0 0 0 / 0.35);
-  }
-}
-
 /* ---------- Fonts (self-hosted from @fontsource, font-display: swap) ---------- */
 
 /* ---------- Base ---------- */

@@ -13,6 +13,26 @@
          Manual init lets ai-panel.js register its field type before the config is validated. -->
     <script>
       window.CMS_MANUAL_INIT = true;
+
+      // The admin is light-only. Seed Sveltia's saved preference and pin the
+      // data-theme attribute before the CMS initializes, then keep it pinned.
+      (() => {
+        const root = document.documentElement;
+        try {
+          const prefs = JSON.parse(localStorage.getItem("sveltia-cms.prefs") || "{}");
+          prefs.theme = "light";
+          localStorage.setItem("sveltia-cms.prefs", JSON.stringify(prefs));
+        } catch {}
+        const pin = () => {
+          if (root.dataset.theme !== "light") root.dataset.theme = "light";
+          if (root.dataset.autoTheming !== "false") root.dataset.autoTheming = "false";
+        };
+        pin();
+        new MutationObserver(pin).observe(root, {
+          attributes: true,
+          attributeFilter: ["data-theme", "data-auto-theming"],
+        });
+      })();
     </script>
     <!-- Sveltia CMS, pinned. Update deliberately: change the version and test on a deploy preview. -->
     <script src="https://unpkg.com/@sveltia/cms@0.253.1/dist/sveltia-cms.js"></script>
@@ -20,5 +40,7 @@
     <script>
       window.CMS.init();
     </script>
+    <script src="/admin/post-actions.js"></script>
+    <script src="/admin/admin-shell.js"></script>
   </body>
 </html>
