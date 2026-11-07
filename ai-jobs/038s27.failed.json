@@ -1,0 +1,8 @@
+{
+  "slug": "038s27",
+  "error": "AI প্রদানকারী কী-টি গ্রহণ করেনি (401)। Google AI Studio থেকে নতুন কী নিয়ে Netlify-র AI_AGENT_KEY-তে বসান, তারপর redeploy করুন।",
+  "code": "AUTH",
+  "status": 401,
+  "model": "gemini-3.5-flash",
+  "failedAt": "2026-11-07T16:54:09.399Z"
+}
