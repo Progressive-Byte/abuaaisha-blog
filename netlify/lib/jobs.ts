@@ -35,6 +35,10 @@ export interface PendingJob extends JobRequest {
 export interface FailedJob {
   slug: string;
   error: string;
+  /** Machine-readable cause (AUTH, PERMISSION, QUOTA, …); never contains secrets. */
+  code?: string;
+  status?: number | null;
+  model?: string;
   failedAt: string;
 }
 

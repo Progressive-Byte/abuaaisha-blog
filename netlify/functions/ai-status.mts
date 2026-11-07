@@ -19,7 +19,7 @@ export default (req: Request) =>
       return json({ status: "ready", slug, editUrl: `/admin/#/collections/posts/entries/${slug}` });
     }
     const failed = await readFailed(slug);
-    if (failed) return json({ status: "failed", slug, error: failed.error });
+    if (failed) return json({ status: "failed", slug, error: failed.error, code: failed.code, model: failed.model });
 
     const pending = await readPending(slug);
     if (pending) {

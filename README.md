@@ -19,17 +19,17 @@ version.
 
 ## Where things live
 
-| Path | What |
-| --- | --- |
-| `src/content/posts/*.md` | Posts. File name = URL: `033s22.md` → `/posts/033s22/` |
-| `src/content/pages/about.md` | About page text |
-| `src/lib/post-schema.ts` | Post front matter schema — used by the build **and** the AI function |
-| `src/styles/global.css` | Design tokens (from the Figma "Midnight Blue" page) |
-| `src/components/`, `src/pages/` | Design and routes |
-| `public/admin/` | Sveltia CMS (`/admin`), `config.yml`, `admin.css`, `ai-panel.js` |
-| `netlify/functions/` | `ai-generate`, `ai-generate-background`, `ai-status` |
-| `netlify/lib/agent.ts` | The only file that knows the AI provider (Gemini) |
-| `public/images/posts/` | Post images (WebP, ≤1600px); thumbs are generated at build |
+| Path                            | What                                                                 |
+| ------------------------------- | -------------------------------------------------------------------- |
+| `src/content/posts/*.md`        | Posts. File name = URL: `033s22.md` → `/posts/033s22/`               |
+| `src/content/pages/about.md`    | About page text                                                      |
+| `src/lib/post-schema.ts`        | Post front matter schema — used by the build **and** the AI function |
+| `src/styles/global.css`         | Design tokens (from the Figma "Midnight Blue" page)                  |
+| `src/components/`, `src/pages/` | Design and routes                                                    |
+| `public/admin/`                 | Sveltia CMS (`/admin`), `config.yml`, `admin.css`, `ai-panel.js`     |
+| `netlify/functions/`            | `ai-generate`, `ai-generate-background`, `ai-status`                 |
+| `netlify/lib/agent.ts`          | The only file that knows the AI provider (Gemini)                    |
+| `public/images/posts/`          | Post images (WebP, ≤1600px); thumbs are generated at build           |
 
 ## Post slugs
 
@@ -41,6 +41,10 @@ version.
 
 The panel is a Sveltia custom field type (`public/admin/ai-panel.js`); a `preSave` hook strips its `aiDraft` value so it never reaches the front matter. `/admin/ai` redirects to `/admin/`.
 
-Setup on Netlify (Site configuration → Environment variables): `AI_AGENT_KEY`, `GITHUB_BOT_TOKEN` (this repo, Contents read/write) and `ALLOWED_EDITORS` (comma-separated GitHub logins). The repository owner from `GITHUB_REPO`, `rwxlog` and `MujahidEmon` are always allowed. Redeploy after changing any variable. The cover image is best-effort: if the image model fails (for example, no quota), the article is still saved without a cover. If text generation fails with 429, the AI key has no quota left — enable billing or use another key/model.
+Setup on Netlify (Site configuration → Environment variables): `AI_AGENT_KEY`, `GITHUB_BOT_TOKEN` (this repo, Contents read/write) and `ALLOWED_EDITORS` (comma-separated GitHub logins). The repository owner from `GITHUB_REPO`, `rwxlog` and `MujahidEmon` are always allowed. Redeploy after changing any variable. The key is trimmed and surrounding quotes are stripped, so a paste with a trailing newline does not break auth.
+
+Model defaults are current Flash models (`gemini-3.8-flash`, then `gemini-3.6-flash`, `gemini-3.5-flash`): free-tier keys have no quota for Pro-class models and older names have been retired. Override with `AI_TEXT_MODEL` / `AI_TEXT_MODEL_FALLBACKS` / `AI_IMAGE_MODEL`. The cover image is best-effort: if the image model fails (for example, no quota — free tier has none), the article is still saved without a cover.
+
+Failures are typed: `ai-generate-background` logs `{ event: "ai-draft-failed", code, status, model, error }` and stores `code`/`status`/`model` in `ai-jobs/<slug>.failed.json`, so an operator can tell a 401 from a 403, a 429, a deprecated model, a timeout or a GitHub token problem without reading the raw provider payload. The API key is never logged or stored in a marker.
 
 Environment variables are listed in `.env.example`.

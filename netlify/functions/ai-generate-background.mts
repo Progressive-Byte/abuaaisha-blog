@@ -2,25 +2,19 @@
 // the site's schema, converts the cover to WebP and commits the draft post + image in ONE
 // commit, removing the pending marker. On any failure it commits a failure marker instead.
 // The draft is always `draft: true` — only a person can publish it.
+import { AiError, describeAiError, redact } from "../lib/ai-error";
 import { generateDraft } from "../lib/agent";
 import { requireEditor } from "../lib/auth";
 import { buildPost, toCoverWebp } from "../lib/draft";
 import { commitFiles, fileExists } from "../lib/github";
 import { failedPath, imagePath, LENGTHS, pendingPath, postPath, readPending, type FailedJob } from "../lib/jobs";
 
-/** Turn provider errors into something an editor can act on. Full details stay in the logs. */
-function readableError(err: unknown): string {
-  const raw = err instanceof Error ? err.message : String(err);
-  if (/RESOURCE_EXHAUSTED|quota|\b429\b/i.test(raw)) {
-    return "AI কোটা শেষ হয়েছে (429)। Google AI Studio-তে বিলিং/কোটা দেখুন, অথবা পরে আবার চেষ্টা করুন।";
-  }
-  if (/API key|PERMISSION_DENIED|\b401\b|\b403\b/i.test(raw)) {
-    return "AI কী বা অনুমতি সঠিক নয়। Netlify → Environment variables-এ AI_AGENT_KEY পরীক্ষা করুন।";
-  }
-  if (/Missing environment variable/i.test(raw)) {
-    return `${raw} — Netlify → Site configuration → Environment variables দেখুন।`;
-  }
-  return raw.length > 500 ? `${raw.slice(0, 500)}…` : raw;
+/** Anything that escaped the AI adapter, tagged so a GitHub failure is never blamed on the key. */
+function toJobError(err: unknown): AiError {
+  if (err instanceof AiError) return err;
+  const message = err instanceof Error ? err.message : String(err);
+  if (/^GitHub /i.test(message)) return new AiError("GITHUB", redact(message));
+  return new AiError("UNKNOWN", redact(message));
 }
 
 export default async (req: Request) => {
@@ -42,26 +36,70 @@ export default async (req: Request) => {
       words: LENGTHS[job.length],
       notes: job.notes,
     });
-    const cover = await toCoverWebp(draft.image);
+
+    let cover: Buffer | null = null;
+    try {
+      cover = await toCoverWebp(draft.image);
+    } catch (err) {
+      // The cover is best-effort: a bad download/encode must not discard the article.
+      console.warn(
+        JSON.stringify({ event: "ai-cover-skipped", error: redact(err instanceof Error ? err.message : String(err)) }),
+      );
+    }
+
     const { markdown } = buildPost({ slug, category: job.category, draft, hasImage: !!cover, date: new Date() });
 
-    await commitFiles(`content: AI draft ${slug} (needs review)\n\nRequested by @${job.requestedBy}. Topic: ${job.topic}`, [
-      { path: postPath(slug), content: markdown },
-      ...(cover ? [{ path: imagePath(slug), content: cover }] : []),
-      { path: pendingPath(slug), delete: true as const },
-    ]);
+    await commitFiles(
+      `content: AI draft ${slug} (needs review)\n\nRequested by @${job.requestedBy}. Topic: ${job.topic}`,
+      [
+        { path: postPath(slug), content: markdown },
+        ...(cover ? [{ path: imagePath(slug), content: cover }] : []),
+        { path: pendingPath(slug), delete: true as const },
+      ],
+    );
 
     // Cost tracking: one structured log line per job (Netlify → Logs → Functions).
     console.log(
       JSON.stringify({ event: "ai-draft", slug, by: job.requestedBy, ms: Date.now() - started, usage: draft.usage }),
     );
   } catch (err) {
-    const error = err instanceof Error ? err.message : String(err);
-    console.error(JSON.stringify({ event: "ai-draft-failed", slug, by: job.requestedBy, error }));
-    const failed: FailedJob = { slug, error: readableError(err), failedAt: new Date().toISOString() };
-    await commitFiles(`ai: failed ${slug}`, [
-      { path: failedPath(slug), content: `${JSON.stringify(failed, null, 2)}\n` },
-      { path: pendingPath(slug), delete: true },
-    ]);
+    const jobError = toJobError(err);
+    console.error(
+      JSON.stringify({
+        event: "ai-draft-failed",
+        slug,
+        by: job.requestedBy,
+        code: jobError.code,
+        status: jobError.status,
+        model: jobError.model,
+        error: jobError.detail,
+      }),
+    );
+
+    const failed: FailedJob = {
+      slug,
+      error: describeAiError(jobError),
+      code: jobError.code,
+      status: jobError.status,
+      model: jobError.model ?? undefined,
+      failedAt: new Date().toISOString(),
+    };
+
+    try {
+      await commitFiles(`ai: failed ${slug}`, [
+        { path: failedPath(slug), content: `${JSON.stringify(failed, null, 2)}\n` },
+        { path: pendingPath(slug), delete: true },
+      ]);
+    } catch (markerError) {
+      // If GitHub itself is down, the pending marker remains and ai-status reports
+      // a timeout later. Log it so the two failures are not conflated.
+      console.error(
+        JSON.stringify({
+          event: "ai-failure-marker-not-written",
+          slug,
+          error: redact(markerError instanceof Error ? markerError.message : String(markerError)),
+        }),
+      );
+    }
   }
 };
