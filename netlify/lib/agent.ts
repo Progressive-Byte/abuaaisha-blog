@@ -3,6 +3,7 @@
 //
 // Env: AI_AGENT_KEY (required), AI_AGENT_URL (optional API base URL override),
 //      AI_TEXT_MODEL / AI_TEXT_MODEL_FALLBACKS / AI_IMAGE_MODEL (optional model overrides).
+import { createHash } from "node:crypto";
 import { GoogleGenAI } from "@google/genai";
 import type { Category } from "../../src/lib/post-schema";
 import { AiError, canTryNextModel, fromProviderError } from "./ai-error";
@@ -116,11 +117,14 @@ function client(): GoogleGenAI {
   const base = baseUrl();
 
   // Diagnostics only. Neither the key nor a derived secret ever reaches a log line.
+  // keyFingerprint is a truncated one-way hash: it lets an operator compare the
+  // runtime value with a known-good key without revealing either one.
   console.info(
     JSON.stringify({
       event: "ai-client",
       keyFormat: keyFormat(key),
       keyLength: key.length,
+      keyFingerprint: createHash("sha256").update(key).digest("hex").slice(0, 10),
       keyHadOuterWhitespace: raw !== raw.trim(),
       keyHadSurroundingQuotes: /^["'].*["']$/.test(raw.trim()),
       baseUrlOverridden: Boolean(base),
